@@ -1,4 +1,3 @@
-
 #OS X Specific
 alias dnscache='dscacheutil -flushcache'
 alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
@@ -19,6 +18,35 @@ export PAGER="less -q"
 export HISTFILESIZE=2500
 
 set bell-style none
+
+# Python
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+export PIP_REQUIRE_VIRTUALENV=true
+
+function syspip() {
+  PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+export PYTHONDONTWRITEBYTECODE=1
+
+export VIRTUALENVS_HOME=$WORKON_HOME
+
+if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+PATH="/usr/local/share/python:$PATH"
+
+
+if [ -d "${HOME}/bin" ]; then
+  PATH="${HOME}/bin:$PATH"
+fi
+
+export PATH
 
 
 if [ -d "${HOME}/bin" ]; then
