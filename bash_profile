@@ -152,7 +152,7 @@ function reset_prompt {
     ;;
   esac
 
-  export PS1="${LIGHT_GREEN}\u@\h ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${LIGHT_BLUE}\$(prompt_git)${LIGHT_GRAY} \$ "
+  export PS1="${LIGHT_GREEN}\u ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${LIGHT_BLUE}\$(prompt_git)${LIGHT_GRAY} \$ "
   PS2='> '
   PS4='+ '
 }
