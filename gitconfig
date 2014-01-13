@@ -7,3 +7,4 @@ lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s
 diff = auto
 [core]
 editor = subl -n -w
+excludesfile = ~/.gitignore
