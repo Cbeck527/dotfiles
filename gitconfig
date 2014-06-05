@@ -7,4 +7,11 @@ lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s
 diff = auto
 [core]
 editor = vim
-excludesfile = ~/.gitignore
+excludesfile = /Users/chris/.gitignore
+[pull]
+	rebase = true
+[push]
+	default = simple
+
+[hub]
+protocol = https

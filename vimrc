@@ -18,8 +18,9 @@ endif
 " ensure ftdetect et al work by including this after the Vundle stuff
 filetype plugin indent on
 
-"set smartindent
-"set autoindent
+" let macvim relax on the whole colorscheme thing
+let macvim_skip_colorscheme = 1
+
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
@@ -50,6 +51,8 @@ if exists('$TMUX')  " Support resizing in tmux
   set ttymouse=xterm2
 endif
 
+
+
 " keyboard shortcuts
 let mapleader = ','
 map <C-k> <C-w>h
@@ -61,6 +64,9 @@ nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>t :CtrlP<CR>
 nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nmap <leader>g :GitGutterToggle<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gr :Gread<CR>
+nmap <leader>gb :Gblame<CR>
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " search settings
@@ -109,4 +115,63 @@ if exists('$TMUX')
 else
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+" MacVim Specific
+if has("gui_macvim")
+  " No toolbars, menu or scrollbars in the GUI
+  set guifont=Source\ Code\ Pro\ for\ Powerline:h12
+  set clipboard+=unnamed
+  set vb t_vb=
+  set guioptions-=m  "no menu
+  set guioptions-=T  "no toolbar
+  set guioptions-=l
+  set guioptions-=L
+  set guioptions-=r  "no scrollbar
+  set guioptions-=R
+
+  " Comment lines with cmd+/
+  map <D-/> :TComment<cr>
+  vmap <D-/> :TComment<cr>gv
+
+  " Indent lines with cmd+[ and cmd+]
+  nmap <D-]> >>
+  nmap <D-[> <<
+  vmap <D-[> <gv
+  vmap <D-]> >gv
+
+  "Open sidebar with cmd+k
+  map <D-k> :NERDTreeToggle<CR>
+
+  " This mapping makes Ctrl-Tab switch between tabs.
+  " Ctrl-Shift-Tab goes the other way.
+  noremap <C-Tab> :tabnext<CR>
+  noremap <C-S-Tab> :tabprev<CR>
+
+  " switch between tabs with cmd+1, cmd+2,..."
+  map <D-1> 1gt
+  map <D-2> 2gt
+  map <D-3> 3gt
+  map <D-4> 4gt
+  map <D-5> 5gt
+  map <D-6> 6gt
+  map <D-7> 7gt
+  map <D-8> 8gt
+  map <D-9> 9gt
+
+  " until we have default MacVim shortcuts this is the only way to use it in
+  " insert mode
+  imap <D-1> <esc>1gt
+  imap <D-2> <esc>2gt
+  imap <D-3> <esc>3gt
+  imap <D-4> <esc>4gt
+  imap <D-5> <esc>5gt
+  imap <D-6> <esc>6gt
+  imap <D-7> <esc>7gt
+  imap <D-8> <esc>8gt
+  imap <D-9> <esc>9gt
+
+  " Select text whit shift
+  let macvim_hig_shift_movement = 1
+
 endif

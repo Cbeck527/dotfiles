@@ -145,11 +145,19 @@ function reset_prompt {
   SOLAR_GREEN=$(tput setaf 64)
   SOLAR_WHITE=$(tput setaf 254)
 
-  export PS1="${GREEN}\u ${LIGHT_GREEN}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_BLUE} \$ ${NONE}"
+  export PS1="${GREEN}\u ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
   PS2='> '
   PS4='+ '
 }
 
-reset_prompt
+# use .localrc for settings specific to one system
+if [ -f ~/.localrc ]; then
+    source ~/.localrc
+fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Handle resizes gracefully.
+shopt -s checkwinsize
+
+reset_prompt
