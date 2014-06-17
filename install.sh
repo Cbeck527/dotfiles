@@ -97,7 +97,7 @@ fi
 note "Installing dotfiles..."
 for path in * ; do
     case $path in
-        .|..|.git|README.md|extras|virtualenv|install.sh)
+        .|..|.git|README.md|extras|virtualenv|install.sh|localrc*)
             continue
             ;;
         *)
@@ -110,8 +110,9 @@ note "Installing vundle and vim plugins"
 if [ ! -d ~/.vim/bundle ]; then
   mkdir -p ~/.vim/bundle
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim +PluginInstall +qall
 fi
+vim +PluginInstall +qall
+
 
 # TODO: extend this
 #
