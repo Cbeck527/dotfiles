@@ -110,6 +110,7 @@ note "Installing vundle and vim plugins"
 if [ ! -d ~/.vim/bundle ]; then
   mkdir -p ~/.vim/bundle
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  vim +PluginInstall +qall
 fi
 
 # TODO: extend this

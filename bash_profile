@@ -5,8 +5,8 @@ alias apcycle='networksetup -setairportpower en1 off && networksetup -setairport
 # Normal ol' aliases
 alias reloadprofile='. ~/.bash_profile'
 alias warp='ssh chris.becker@warp'
-alias ls='ls -lh'
-alias lsa='ls -a'
+alias ls='ls -lh --color'
+alias lsa='ls -a --color'
 alias e='open -a MacVim'
 alias e.='open -a MacVim .'
 alias grep="grep --color=auto"
