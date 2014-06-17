@@ -101,7 +101,7 @@ for path in * ; do
             continue
             ;;
         *)
-            link $basedir/$path $HOME/test/.$path
+            link $basedir/$path $HOME/.$path
             ;;
     esac
 done
