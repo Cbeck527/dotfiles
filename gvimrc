@@ -1,1 +1,1 @@
-set lines=65 columns=99
+set columns=100

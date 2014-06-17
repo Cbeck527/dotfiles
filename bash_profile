@@ -1,14 +1,7 @@
-# OS X Specific
-alias dnscache='dscacheutil -flushcache'
-alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
-
 # Normal ol' aliases
 alias reloadprofile='. ~/.bash_profile'
-alias warp='ssh chris.becker@warp'
 alias ls='ls -lh --color'
 alias lsa='ls -a --color'
-alias e='open -a MacVim'
-alias e.='open -a MacVim .'
 alias grep="grep --color=auto"
 
 # Vars
@@ -16,9 +9,6 @@ export CLICOLOR=1
 export HISTCONTROL=ignoreboth
 export PAGER="less -q"
 export HISTFILESIZE=2500
-export CFLAGS=-Qunused-arguments
-export CPPFLAGS=-Qunused-arguments
-
 set bell-style none
 
 # Python
@@ -55,11 +45,6 @@ if [ -f ~/bin/git-completion.bash ]; then
 fi
 
 export GIT_MERGE_AUTOEDIT=0
-
-# Ansible and Vagrant Fun
-export ANSIBLE_NOCOWS=1
-export ANSIBLE_SSH_ARGS=""
-export VAGRANT_DEFAULT_PROVIDER=virtualbox
 
 is_git_repo() {
     $(git rev-parse --is-inside-work-tree &> /dev/null)
@@ -154,8 +139,6 @@ function reset_prompt {
 if [ -f ~/.localrc ]; then
     source ~/.localrc
 fi
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Handle resizes gracefully.
 shopt -s checkwinsize

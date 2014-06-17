@@ -39,6 +39,7 @@ set smartcase                                                " case-sensitive se
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
+set nospell
 
 " Whitespace
 set tabstop=2 shiftwidth=2                    " a tab is two spaces
@@ -51,23 +52,26 @@ if exists('$TMUX')  " Support resizing in tmux
   set ttymouse=xterm2
 endif
 
-
-
 " keyboard shortcuts
 let mapleader = ','
-map <C-k> <C-w>h
-map <C-l> <C-w>l
 nmap <leader>a :Ag<space>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>t :CtrlP<CR>
 nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nmap <leader>g :GitGutterToggle<CR>
+nmap <leader>gg :GitGutterToggle<CR>
 nmap <leader>gs :Gstatus<CR>
-nmap <leader>gr :Gread<CR>
 nmap <leader>gb :Gblame<CR>
+nmap <leader>/ :TComment<cr>
+vmap <leader>/ :TComment<cr>gv
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 " search settings
 set hlsearch
