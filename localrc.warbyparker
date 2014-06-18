@@ -10,8 +10,8 @@ alias e='open -a MacVim'
 alias e.='open -a MacVim .'
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
-alias warp='ssh chris.becker@warp'
-alias warp-test='ssh chris.becker@warp-test'
+alias warp-old='ssh chris.becker@warp'
+alias warp='ssh chris.becker@warp-test'
 
 # rvm fun
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
