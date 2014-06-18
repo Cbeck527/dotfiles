@@ -1,7 +1,16 @@
 # Normal ol' aliases
 alias reloadprofile='. ~/.bash_profile'
-alias ls='ls -lh'
-alias lsa='ls -a'
+
+# check for whichever version of ls
+if ls --color &> /dev/null;
+then
+  alias ls='ls -lh --color'
+  alias lsa='ls -a --color'
+else
+  alias ls='ls -lh'
+  alias lsa='ls -a'
+fi
+
 alias grep="grep --color=auto"
 
 # Vars
