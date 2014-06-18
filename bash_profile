@@ -139,7 +139,13 @@ function reset_prompt {
   SOLAR_GREEN=$(tput setaf 64)
   SOLAR_WHITE=$(tput setaf 254)
 
-  export PS1="${GREEN}\u ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
+  if [ $(hostname) = "beckbook-pro" ]; then
+    local HOST_PROMPT=""
+  else
+    local HOST_PROMPT="@\h"
+  fi
+
+  export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
   PS2='> '
   PS4='+ '
 }
