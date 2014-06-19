@@ -97,7 +97,7 @@ fi
 note "Installing dotfiles..."
 for path in * ; do
     case $path in
-        .|..|.git|README.md|extras|virtualenv|install.sh|localrc*)
+        .|..|.git|README.md|extras|virtualenv|install.sh|localrc*|osxrc)
             continue
             ;;
         *)

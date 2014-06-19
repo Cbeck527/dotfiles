@@ -139,7 +139,7 @@ function reset_prompt {
   SOLAR_GREEN=$(tput setaf 64)
   SOLAR_WHITE=$(tput setaf 254)
 
-  if [ $(hostname) = "beckbook-pro" ]; then
+  if [ $(hostname) = "beckbook-pro" ] || [ $(hostname) = "beck-mini" ]; then
     local HOST_PROMPT=""
   else
     local HOST_PROMPT="@\h"
@@ -149,6 +149,11 @@ function reset_prompt {
   PS2='> '
   PS4='+ '
 }
+
+# use .osxrc for settings specific to OS X
+if [ -f ~/.osxrc ]; then
+    source ~/.osxrc
+fi
 
 # use .localrc for settings specific to one system
 if [ -f ~/.localrc ]; then

@@ -1,20 +1,9 @@
-# OS X and workstation-specific aliases
+# Warby Parker specific aliases
 
-alias dnscache='dscacheutil -flushcache'
-alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
 export PATH=$PATH:~/Code/hegemon/scripts
 export HEGEMON_ENVIRONMENT=vagrant
-alias o.="open ."
-alias mou="open -a Mou"
-alias e='open -a MacVim'
-alias e.='open -a MacVim .'
-export CFLAGS=-Qunused-arguments
-export CPPFLAGS=-Qunused-arguments
 alias warp-old='ssh chris.becker@warp'
 alias warp='ssh chris.becker@warp-test'
-
-# rvm fun
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Ansible and Vagrant Fun
 export ANSIBLE_NOCOWS=1

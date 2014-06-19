@@ -1,0 +1,13 @@
+# OS X specific aliases
+
+alias dnscache='dscacheutil -flushcache'
+alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
+alias o.="open ."
+alias mou="open -a Mou"
+alias e='open -a MacVim'
+alias e.='open -a MacVim .'
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
+
+# rvm fun
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
