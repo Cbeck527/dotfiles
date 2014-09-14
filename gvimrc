@@ -1,1 +1,1 @@
-set columns=100
+set columns=103

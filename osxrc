@@ -6,6 +6,7 @@ alias o.="open ."
 alias mou="open -a Mou"
 alias e='open -a MacVim'
 alias e.='open -a MacVim .'
+alias v='vagrant'
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 

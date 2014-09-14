@@ -1,12 +1,14 @@
 # Warby Parker specific aliases
 
 export PATH=$PATH:~/Code/hegemon/scripts
+alias c="charon"
+alias hegemon="cd ~/Code/hegemon"
+alias helios="cd ~/Code/helios"
 export HEGEMON_ENVIRONMENT=vagrant
-alias warp-old='ssh chris.becker@warp'
-alias warp='ssh chris.becker@warp-test'
+alias warp='ssh chris.becker@warp'
 
 # Ansible and Vagrant Fun
 export ANSIBLE_NOCOWS=1
 export ANSIBLE_SSH_ARGS=""
-export VAGRANT_DEFAULT_PROVIDER=virtualbox
-
+export VAGRANT_DEFAULT_PROVIDER=vmware_fusion
+export HOMEBREW_GITHUB_API_TOKEN=188ce052c2b13cf79b84f5b51a5748bfaad7b090

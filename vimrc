@@ -40,11 +40,13 @@ set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
 set nospell
+set noshowmode
 
 " Whitespace
 set tabstop=2 shiftwidth=2                    " a tab is two spaces
 set expandtab                                 " use spaces, not tabs
 set backspace=indent,eol,start                " backspace through everything in insert mode
+set colorcolumn=99
 
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a
@@ -56,12 +58,14 @@ endif
 let mapleader = ','
 nmap <leader>a :Ag<space>
 nmap <leader>b :CtrlPBuffer<CR>
+nmap <leader>cd cdCD
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
+map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>
 nmap <leader>t :CtrlP<CR>
 nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nmap <leader>gg :GitGutterToggle<CR>
 nmap <leader>gs :Gstatus<CR>
+nmap <leader>gc :Gcommit<CR>
 nmap <leader>gb :Gblame<CR>
 nmap <leader>/ :TComment<cr>
 vmap <leader>/ :TComment<cr>gv
@@ -89,10 +93,14 @@ match ErrorMsg '\s\+$'
 " in case you forgot to sudo
 cmap w!! %!sudo tee > /dev/null %
 
+" maps control backspace like I'm used to
+cmap <A-BS> <C-W>
+
 " plugin settings
-let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:ctrlp_match_window = 'order:ttb,max:25'
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
+highlight SignColumn guibg=#073642
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -105,9 +113,6 @@ endif
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
-" md is markdown
-autocmd BufRead,BufNewFile *.md set filetype=markdown
-autocmd BufRead,BufNewFile *.md set spell
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
@@ -124,7 +129,8 @@ endif
 " MacVim Specific
 if has("gui_macvim")
   " No toolbars, menu or scrollbars in the GUI
-  set guifont=Source\ Code\ Pro\ for\ Powerline:h12
+  let g:airline_powerline_fonts = 1
+  set guifont=Inconsolata\ for\ Powerline:h14
   set clipboard+=unnamed
   set vb t_vb=
   set guioptions-=m  "no menu
@@ -133,6 +139,9 @@ if has("gui_macvim")
   set guioptions-=L
   set guioptions-=r  "no scrollbar
   set guioptions-=R
+
+  " exit insert when lost focus
+  au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
 
   " Comment lines with cmd+/
   map <D-/> :TComment<cr>

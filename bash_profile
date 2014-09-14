@@ -49,8 +49,9 @@ fi
 
 export PATH=/usr/local/bin:$PATH
 
-if [ -f ~/bin/git-completion.bash ]; then
-    . ~/bin/git-completion.bash
+# bash completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
 fi
 
 export GIT_MERGE_AUTOEDIT=0
@@ -112,6 +113,8 @@ function venv_prompt() {
   fi
   printf " $(basename $VIRTUAL_ENV)"
 }
+
+function gi() { curl http://www.gitignore.io/api/$@ ;}
 
 function reset_prompt {
 
