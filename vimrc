@@ -96,6 +96,9 @@ cmap w!! %!sudo tee > /dev/null %
 " maps control backspace like I'm used to
 cmap <A-BS> <C-W>
 
+" pls
+nnoremap Q <nop>
+
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:25'
 let g:NERDSpaceDelims=1
@@ -110,6 +113,9 @@ if executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+
+" spell check my git commits
+autocmd FileType gitcommit setlocal spell
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
