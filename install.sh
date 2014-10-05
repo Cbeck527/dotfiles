@@ -3,7 +3,7 @@
 # Chris's dotfile installer, based on Ian's
 # https://github.com/statico/dotfiles
 #
-#   curl https://github.com/cbeck527/dotfiles/raw/master/install.sh | sh
+#   curl https://raw.githubusercontent.com/cbeck527/dotfiles/master/install.sh | sh
 #
 # or:
 #
