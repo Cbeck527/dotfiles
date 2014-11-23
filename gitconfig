@@ -18,4 +18,7 @@ protocol = https
 [github]
 	user = cbeck527
 [ghi]
-	token = !security find-internet-password -a  -s github.com -l 'ghi token' -w
+  token = !security find-internet-password -a  -s github.com -l 'ghi token' -w
+
+[alias]
+          lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit

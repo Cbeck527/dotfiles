@@ -6,6 +6,7 @@ alias hegemon="cd ~/Code/hegemon"
 alias helios="cd ~/Code/helios"
 export HEGEMON_ENVIRONMENT=vagrant
 alias warp='ssh chris.becker@warp'
+alias 15five='git log --since=1.weeks --author=chris.becker --abbrev-commit --pretty="%h - %s"'
 
 # Ansible and Vagrant Fun
 export ANSIBLE_NOCOWS=1

@@ -38,7 +38,7 @@ set showcmd
 set smartcase                                                " case-sensitive search if any caps
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
-set wildmode=longest,list,full
+set wildmode=longest,list
 set nospell
 set noshowmode
 
@@ -50,9 +50,6 @@ set colorcolumn=99
 
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a
-if exists('$TMUX')  " Support resizing in tmux
-  set ttymouse=xterm2
-endif
 
 " keyboard shortcuts
 let mapleader = ','
@@ -63,6 +60,7 @@ nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>
 nmap <leader>t :CtrlP<CR>
+nmap <leader>r :CtrlPBuffer<CR>
 nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gc :Gcommit<CR>
@@ -96,8 +94,17 @@ cmap w!! %!sudo tee > /dev/null %
 " maps control backspace like I'm used to
 cmap <A-BS> <C-W>
 
+" yanks lines like D and C funciton
+nnoremap Y y$
+
+" split the intuitive way
+set splitbelow
+set splitright
+
 " pls
+nnoremap <F1> <nop>
 nnoremap Q <nop>
+nnoremap K <nop>
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:25'
@@ -117,20 +124,19 @@ endif
 " spell check my git commits
 autocmd FileType gitcommit setlocal spell
 
+" markdown specific settings, 80 char width and spellcheck
+au BufRead,BufNewFile *.md setlocal textwidth=80 spell
+au BufRead,BufNewFile *.markdown setlocal textwidth=80 spell
+
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" Fix Cursor in TMUX
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+" Python
+let g:khuno_max_line_length=99
+nmap <silent><Leader>e <Esc>:Khuno show<CR>
 
 " MacVim Specific
 if has("gui_macvim")

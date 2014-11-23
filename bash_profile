@@ -1,14 +1,20 @@
 # Normal ol' aliases
 alias reloadprofile='. ~/.bash_profile'
 
+# git aliases
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+alias gs='git status'
+
 # check for whichever version of ls
 if ls --color &> /dev/null;
 then
-  alias ls='ls -lh --color'
-  alias lsa='ls -a --color'
+  alias ls='ls -lhF --color'
+  alias lsa='ls -lahF --color'
 else
-  alias ls='ls -lh'
-  alias lsa='ls -a'
+  alias ls='ls -lhF'
+  alias lsa='ls -lahF'
 fi
 
 alias grep="grep --color=auto"
