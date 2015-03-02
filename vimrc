@@ -54,6 +54,7 @@ set mouse=a
 " keyboard shortcuts
 let mapleader = ','
 nmap <leader>a :Ag<space>
+nmap <leader>er :Scratch<CR>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>cd cdCD
 nmap <leader>d :NERDTreeToggle<CR>
