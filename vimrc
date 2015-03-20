@@ -46,7 +46,7 @@ set noshowmode
 set tabstop=2 shiftwidth=2                    " a tab is two spaces
 set expandtab                                 " use spaces, not tabs
 set backspace=indent,eol,start                " backspace through everything in insert mode
-set colorcolumn=99
+set colorcolumn=72,99
 
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a
@@ -126,8 +126,8 @@ endif
 autocmd FileType gitcommit setlocal spell
 
 " markdown specific settings, 80 char width and spellcheck
-au BufRead,BufNewFile *.md setlocal textwidth=80 spell
-au BufRead,BufNewFile *.markdown setlocal textwidth=80 spell
+au BufRead,BufNewFile *.md setlocal textwidth=80 spell colorcolumn=80
+au BufRead,BufNewFile *.markdown setlocal textwidth=80 spell colorcolumn=80
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
