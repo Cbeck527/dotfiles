@@ -1,22 +1,27 @@
 " don't bother with vi compatibility
 set nocompatible
 
-" enable syntax highlighting
-syntax enable
-
 " configure Vundle
-filetype on " without this vim emits a zero exit status, later, because of :ft off
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
-
-" install Vundle bundles
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
-endif
-
-" ensure ftdetect et al work by including this after the Vundle stuff
+call vundle#begin()
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'gmarik/Vundle.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'rking/ag.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-markdown'
+Plugin 'mhinz/vim-signify'
+Plugin 'alfredodeza/khuno.vim'
+Plugin 'mtth/scratch.vim'
+call vundle#end()
 filetype plugin indent on
+
+" enable syntax highlighting
+syntax enable
 
 " let macvim relax on the whole colorscheme thing
 let macvim_skip_colorscheme = 1
