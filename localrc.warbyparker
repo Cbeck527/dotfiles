@@ -2,11 +2,10 @@
 
 export PATH=$PATH:~/Code/hegemon/scripts
 alias c="charon"
-alias hegemon="cd ~/Code/hegemon"
-alias helios="cd ~/Code/helios"
 export HEGEMON_ENVIRONMENT=vagrant
 alias warp='ssh chris.becker@warp'
 alias 15five='git log --since=1.weeks --author=chris.becker --abbrev-commit --pretty="%h - %s"'
+alias iawriter='open -a IA\ Writer.app'
 
 # Ansible and Vagrant Fun
 export ANSIBLE_NOCOWS=1

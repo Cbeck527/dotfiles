@@ -59,10 +59,10 @@ set mouse=a
 " keyboard shortcuts
 let mapleader = ','
 nmap <leader>a :Ag<space>
-nmap <leader>er :Scratch<CR>
-nmap <leader>b :CtrlPBuffer<CR>
+nmap <leader>sc :Scratch<CR>
 nmap <leader>cd cdCD
 nmap <leader>d :NERDTreeToggle<CR>
+nmap <silent> <leader>e <Plug>DashSearch
 nmap <leader>f :NERDTreeFind<CR>
 map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>
 nmap <leader>t :CtrlP<CR>
@@ -71,9 +71,14 @@ nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gb :Gblame<CR>
+nmap <silent><Leader>x <Esc>:Khuno show<CR>
 nmap <leader>/ :TComment<cr>
 vmap <leader>/ :TComment<cr>gv
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 " easy window navigation
 map <C-h> <C-w>h
@@ -142,7 +147,6 @@ autocmd VimResized * :wincmd =
 
 " Python
 let g:khuno_max_line_length=99
-nmap <silent><Leader>e <Esc>:Khuno show<CR>
 
 " MacVim Specific
 if has("gui_macvim")
