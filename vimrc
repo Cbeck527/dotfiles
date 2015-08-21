@@ -1,22 +1,27 @@
 " don't bother with vi compatibility
 set nocompatible
-
+set rtp+=/usr/local/Cellar/fzf/HEAD
 " configure Vundle
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'gmarik/Vundle.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'rking/ag.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-fugitive'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-markdown'
-Plugin 'mhinz/vim-signify'
 Plugin 'alfredodeza/khuno.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'bling/vim-airline'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+Plugin 'gmarik/Vundle.vim'
+Plugin 'junegunn/fzf' , {'rtp': '~/.fzf'}
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'mhinz/vim-signify'
 Plugin 'mtth/scratch.vim'
+Plugin 'rizzatti/dash.vim'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-surround'
 call vundle#end()
 filetype plugin indent on
 
@@ -71,10 +76,11 @@ nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gb :Gblame<CR>
+nmap <leader>sol :ToggleBG<CR>
 nmap <silent><Leader>x <Esc>:Khuno show<CR>
+map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 nmap <leader>/ :TComment<cr>
 vmap <leader>/ :TComment<cr>gv
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
@@ -93,6 +99,8 @@ nmap <leader>hl :let @/ = ""<CR>
 " color scheme
 colorscheme solarized
 set bg=dark
+" enable :ToggleBG
+call togglebg#map("")
 " Highlight current line
 set cursorline
 
@@ -155,6 +163,7 @@ if has("gui_macvim")
   set guifont=Inconsolata\ for\ Powerline:h14
   set clipboard+=unnamed
   set vb t_vb=
+  set guioptions-=e  "keep tabs in VIM
   set guioptions-=m  "no menu
   set guioptions-=T  "no toolbar
   set guioptions-=l

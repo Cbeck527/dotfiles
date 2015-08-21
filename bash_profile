@@ -193,6 +193,8 @@ fi
 if [ -f ~/.dotfiles/git_functions.sh ]; then
     source ~/.dotfiles/git_functions.sh
 fi
+# add FZF (fuzzy finder) if present
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Handle resizes gracefully.
 shopt -s checkwinsize

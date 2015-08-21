@@ -1,11 +1,17 @@
 # Warby Parker specific aliases
-
 export PATH=$PATH:~/Code/hegemon/scripts
 alias c="charon"
 export HEGEMON_ENVIRONMENT=vagrant
 alias warp='ssh chris.becker@warp'
+alias warpaws='ssh chris.becker@warpaws'
 alias 15five='git log --since=1.weeks --author=chris.becker --abbrev-commit --pretty="%h - %s"'
 alias iawriter='open -a IA\ Writer.app'
+alias vim='nvim'
+
+# Crude support logging system
+helping() {
+  printf "\n - `date`\n  - $1" >> ~/Dropbox/work_log.md
+}
 
 # Ansible and Vagrant Fun
 export ANSIBLE_NOCOWS=1
