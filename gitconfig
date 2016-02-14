@@ -1,37 +1,52 @@
 [user]
-name = Chris Becker
-email = cbeck527@gmail.com
+  name = Chris Becker
+  email = cbeck527@gmail.com
 [alias]
-lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  edit = "!mvim `git ls-files -m` -p"
 [color]
-diff = auto
+  diff = auto
 [core]
-editor = vim
-excludesfile = /Users/chris/.gitignore
+  editor = nvim
+  excludesfile = /Users/chris/.gitignore
 [pull]
-	rebase = true
+  rebase = true
 [push]
-	default = simple
-
+  default = simple
+[fetch]
+  prune = true
 [hub]
-protocol = https
+  protocol = ssh
 [github]
-	user = cbeck527
+  user = cbeck527
 [ghi]
   token = !security find-internet-password -a  -s github.com -l 'ghi token' -w
 
-[alias]
-          lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [merge]
-	tool = p4mergetool
+  tool = Kaleidoscope
+  ff = false
 [mergetool "p4mergetool"]
-	cmd = ~/Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
-	trustExitCode = false
+  cmd = ~/Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
+  trustExitCode = false
 [mergetool]
-	keepBackup = false
+  keepBackup = false
+  prompt = false
 [diff]
-	tool = Kaleidoscope
+  tool = Kaleidoscope
 [difftool "p4mergetool"]
   cmd = ~/Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
 [difftool "Kaleidoscope"]
-    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustexitcode = true
+[difftool]
+  prompt = false
+[git-up "bundler"]
+  check = false
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+[rebase]
+  autostash = true
