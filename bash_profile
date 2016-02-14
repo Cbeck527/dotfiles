@@ -211,6 +211,11 @@ if [ -f ~/.localrc ]; then
     source ~/.localrc
 fi
 
+# use .secretsrc for API keys and sensitive info
+if [ -f ~/.secretsrc ]; then
+    source ~/.secretsrc
+fi
+
 # add git functions if they are present
 if [ -f ~/.dotfiles/git_functions.sh ]; then
     source ~/.dotfiles/git_functions.sh

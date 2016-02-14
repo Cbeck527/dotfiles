@@ -86,8 +86,6 @@ else
         note "Cloning from git..."
         git clone $gitbase $basedir
         cd $basedir
-        git submodule init
-        git submodule update
     else
         warn "Git not installed."
         unpack_tarball
