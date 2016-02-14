@@ -1,6 +1,6 @@
 # issue pull request
 ipr() {
-    REPO_URL="$(git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/git@/http:\/\//' -e's/\.git$//' | sed -E 's/(\/\/[^:]*):/\1\//')"
+    REPO_URL="$(git remote -v | grep fetch | grep origin | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/git@/http:\/\//' -e's/\.git$//' | sed -E 's/(\/\/[^:]*):/\1\//')"
     ON_BRANCH=$(git branch | grep '^* ' | sed 's/^* //')
     if [[ $REPO_URL == *"gitlab"* ]]
     then

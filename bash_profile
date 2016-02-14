@@ -1,3 +1,10 @@
+# making bash history not suck
+export HISTFILESIZE=99999999
+export HISTSIZE=99999999
+export HISTCONTROL=ignoreboth
+export PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
+shopt -s histappend
+
 # Normal ol' aliases
 alias reloadprofile='. ~/.bash_profile'
 
@@ -6,6 +13,7 @@ alias ga='git add'
 alias gc='git commit'
 alias gd='git diff'
 alias gs='git status'
+alias gcd='cd $(git rev-parse --show-toplevel)'
 
 # check for whichever version of ls
 if ls --color &> /dev/null;
@@ -49,8 +57,8 @@ else
 fi
 
 
-if [ -d "${HOME}/bin" ]; then
-  PATH="${HOME}/bin:$PATH"
+if [ -d "${HOME}/.bin" ]; then
+  PATH="${HOME}/.bin:$PATH"
 fi
 
 export PATH=/usr/local/bin:$PATH
@@ -120,6 +128,14 @@ function venv_prompt() {
   printf " $(basename $VIRTUAL_ENV)"
 }
 
+function aws_credentials() {
+  if [ "$AWS_PROFILE" = "warby" ]; then
+    printf " wp"
+  else
+    return 1
+  fi
+}
+
 # marks
 export MARKPATH=$HOME/.marks
 function jump {
@@ -155,6 +171,7 @@ function reset_prompt {
   local       WHITE="\[\033[1;37m\]"
   local  LIGHT_GRAY="\[\033[0;37m\]"
   local      YELLOW="\[\033[0;33m\]"
+  local      TEAL="\[\033[0;36m\]"
 
   BOLD=$(tput bold)
   RESET=$(tput sgr0)
@@ -174,10 +191,15 @@ function reset_prompt {
     local HOST_PROMPT="@\h"
   fi
 
-  export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
+  export PS1="${GREEN}\u${HOST_PROMPT}${TEAL}$(aws_credentials) ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
   PS2='> '
   PS4='+ '
 }
+
+# handy aws completion
+if [ -f /usr/local/bin/aws ]; then
+  complete -C aws_completer aws
+fi
 
 # use .osxrc for settings specific to OS X
 if [ -f ~/.osxrc ]; then

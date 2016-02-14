@@ -1,2 +1,4 @@
 .DS_Store
 .ropeproject
+.vagrant*
+.fab_tasks~

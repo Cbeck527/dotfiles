@@ -13,5 +13,6 @@ export CPPFLAGS=-Qunused-arguments
 # rvm fun
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-# raibowstream
-alias twttr='/Users/chris/.virtualenvs/rainbowstream/bin/python /Users/chris/.virtualenvs/rainbowstream/bin/rainbowstream'
+# GOLANG!
+export GOPATH=$HOME/go
+export PATH=$PATH:$HOME/go/bin

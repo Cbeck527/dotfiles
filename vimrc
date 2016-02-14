@@ -1,37 +1,37 @@
 " don't bother with vi compatibility
 set nocompatible
-set rtp+=/usr/local/Cellar/fzf/HEAD
 " configure Vundle
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'alfredodeza/khuno.vim'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
 Plugin 'chase/vim-ansible-yaml'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 Plugin 'gmarik/Vundle.vim'
-Plugin 'junegunn/fzf' , {'rtp': '~/.fzf'}
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'mbbill/undotree'
 Plugin 'mhinz/vim-signify'
 Plugin 'mtth/scratch.vim'
-Plugin 'rizzatti/dash.vim'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-surround'
 call vundle#end()
 filetype plugin indent on
+set viminfo='100,n$HOME/.vim/files/viminfo
 
 " enable syntax highlighting
 syntax enable
+" enable syntax checking
+let g:syntastic_python_checkers=['pylint']
 
-" let macvim relax on the whole colorscheme thing
-let macvim_skip_colorscheme = 1
-
-set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
+set autoread                                                 " reload files when changed on disk
 set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
 set directory=~/.vim/swap,~/tmp,.                            " don't store swapfiles in the current directory
@@ -46,7 +46,7 @@ set ruler                                                    " show where you ar
 set scrolloff=3                                              " show context above/below cursorline
 set showcmd
 set smartcase                                                " case-sensitive search if any caps
-set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildignore=log/**,node_modules/**,bower_components/**,target/**,tmp/**,*.rbc
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list
 set nospell
@@ -58,29 +58,31 @@ set expandtab                                 " use spaces, not tabs
 set backspace=indent,eol,start                " backspace through everything in insert mode
 set colorcolumn=72,99
 
-" Enable basic mouse behavior such as resizing buffers.
-set mouse=a
 
 " keyboard shortcuts
+map j gj
+map k gk
 let mapleader = ','
+map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 nmap <leader>a :Ag<space>
 nmap <leader>sc :Scratch<CR>
 nmap <leader>cd cdCD
 nmap <leader>d :NERDTreeToggle<CR>
-nmap <silent> <leader>e <Plug>DashSearch
 nmap <leader>f :NERDTreeFind<CR>
-map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>
 nmap <leader>t :CtrlP<CR>
-nmap <leader>r :CtrlPBuffer<CR>
-nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nmap <leader>gs :Gstatus<CR>
+nmap <leader>gs :Gsatus<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gb :Gblame<CR>
+nmap <leader>se :Errors<CR>
 nmap <leader>sol :ToggleBG<CR>
-nmap <silent><Leader>x <Esc>:Khuno show<CR>
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+nmap <leader>u :UndotreeToggle<CR>
 nmap <leader>/ :TComment<cr>
 vmap <leader>/ :TComment<cr>gv
+
+" buffer fun
+nmap <leader>bl :CtrlPBuffer<CR>
+nmap <leader>bn :new<CR>
+nmap <leader>bvn :vnew<CR>
 
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
@@ -107,9 +109,6 @@ set cursorline
 " Highlight trailing whitespace like an error.
 match ErrorMsg '\s\+$'
 
-" in case you forgot to sudo
-cmap w!! %!sudo tee > /dev/null %
-
 " maps control backspace like I'm used to
 cmap <A-BS> <C-W>
 
@@ -123,22 +122,43 @@ set splitright
 " pls
 nnoremap <F1> <nop>
 nnoremap Q <nop>
-nnoremap K <nop>
 
 " plugin settings
-let g:ctrlp_match_window = 'order:ttb,max:25'
+
+if has("persistent_undo")
+    set undodir=~/.vim/undo/
+    set undofile
+endif
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
 let g:NERDSpaceDelims=1
 let g:gitgutter_enabled = 0
 highlight SignColumn guibg=#073642
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+" The Silver Searcher
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
-
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --ignore bower_components --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
 endif
+
+let g:ctrlp_match_window = 'order:ttb,max:25'
+
+" bind K to grep word under cursor
+nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " spell check my git commits
 autocmd FileType gitcommit setlocal spell
@@ -153,13 +173,12 @@ autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" Python
-let g:khuno_max_line_length=99
+" Nice powerline fonts for Airline
+let g:airline_powerline_fonts = 1
 
 " MacVim Specific
 if has("gui_macvim")
   " No toolbars, menu or scrollbars in the GUI
-  let g:airline_powerline_fonts = 1
   set guifont=Inconsolata\ for\ Powerline:h14
   set clipboard+=unnamed
   set vb t_vb=
@@ -170,6 +189,12 @@ if has("gui_macvim")
   set guioptions-=L
   set guioptions-=r  "no scrollbar
   set guioptions-=R
+
+  " Enable basic mouse behavior such as resizing buffers.
+  set mouse=a
+
+  " let macvim relax on the whole colorscheme thing
+  let macvim_skip_colorscheme = 1
 
   " exit insert when lost focus
   au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
@@ -184,38 +209,18 @@ if has("gui_macvim")
   vmap <D-[> <gv
   vmap <D-]> >gv
 
-  "Open sidebar with cmd+k
+  " easier window navigation
+  map <C-D-h> <C-w>h
+  map <C-D-j> <C-w>j
+  map <C-D-k> <C-w>k
+  map <C-D-l> <C-w>l
+
+  " indent in insert mode
+  imap <D-[> <ESC> <<i
+  imap <D-]> <ESC> >>i
+
+  "Open sidebars with cmd
   map <D-k> :NERDTreeToggle<CR>
-
-  " This mapping makes Ctrl-Tab switch between tabs.
-  " Ctrl-Shift-Tab goes the other way.
-  noremap <C-Tab> :tabnext<CR>
-  noremap <C-S-Tab> :tabprev<CR>
-
-  " switch between tabs with cmd+1, cmd+2,..."
-  map <D-1> 1gt
-  map <D-2> 2gt
-  map <D-3> 3gt
-  map <D-4> 4gt
-  map <D-5> 5gt
-  map <D-6> 6gt
-  map <D-7> 7gt
-  map <D-8> 8gt
-  map <D-9> 9gt
-
-  " until we have default MacVim shortcuts this is the only way to use it in
-  " insert mode
-  imap <D-1> <esc>1gt
-  imap <D-2> <esc>2gt
-  imap <D-3> <esc>3gt
-  imap <D-4> <esc>4gt
-  imap <D-5> <esc>5gt
-  imap <D-6> <esc>6gt
-  imap <D-7> <esc>7gt
-  imap <D-8> <esc>8gt
-  imap <D-9> <esc>9gt
-
-  " Select text whit shift
-  let macvim_hig_shift_movement = 1
+  map <D-u> :UndotreeToggle<CR>
 
 endif
