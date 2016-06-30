@@ -104,6 +104,11 @@ for path in * ; do
     esac
 done
 
+if [ "$(uname -s)" == "Darwin" ]; then
+  note "Installing macOS specific dotfiles"
+  link $basedir/osxrc $HOME/.osxrc
+fi
+
 note "Installing vundle and vim plugins"
 if [ ! -d ~/.vim/bundle ]; then
   mkdir -p ~/.vim/bundle
