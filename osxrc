@@ -16,3 +16,6 @@ export CPPFLAGS=-Qunused-arguments
 # GOLANG!
 export GOPATH=$HOME/go
 export PATH=$PATH:$HOME/go/bin
+
+# Homebrew fun
+HOMEBREW_NO_ANALYTICS=1
