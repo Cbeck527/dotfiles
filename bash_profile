@@ -201,6 +201,11 @@ if [ -f /usr/local/bin/aws ]; then
   complete -C aws_completer aws
 fi
 
+# handy fabric completion
+if [ -f ~/.fabricrc ]; then
+    source ~/.fabricrc
+fi
+
 # use .osxrc for settings specific to OS X
 if [ -f ~/.osxrc ]; then
     source ~/.osxrc

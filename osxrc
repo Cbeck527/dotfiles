@@ -1,12 +1,16 @@
 # OS X specific aliases
 
-alias dnscache='dscacheutil -flushcache'
 alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
-alias o.="open ."
-alias mou="open -a Mou"
-alias e='open -a MacVim'
+alias dnscache='dscacheutil -flushcache'
 alias e.='open -a MacVim .'
+alias e='open -a MacVim'
+alias f='fab'
+alias o.="open ."
 alias v='vagrant'
+alias vim='nvim'
+
+
+# good ol compiling things
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 
