@@ -7,7 +7,7 @@
 [color]
   diff = auto
 [core]
-  editor = nvim
+  editor = vim
   excludesfile = /Users/chris/.gitignore
 [pull]
   rebase = true

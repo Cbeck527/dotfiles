@@ -4,10 +4,10 @@ alias apcycle='networksetup -setairportpower en1 off && networksetup -setairport
 alias dnscache='dscacheutil -flushcache'
 alias e.='open -a MacVim .'
 alias e='open -a MacVim'
+alias ee='open -a Emacs'
 alias f='fab'
 alias o.="open ."
 alias v='vagrant'
-alias vim='nvim'
 
 
 # good ol compiling things
