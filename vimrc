@@ -176,8 +176,12 @@ autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" Nice powerline fonts for Airline
+" Airline config
 let g:airline_powerline_fonts = 1
+
+" Signify config
+let g:signify_sign_change = '~'
+let g:signify_sign_changedelete = g:signify_sign_change
 
 " MacVim Specific
 if has("gui_macvim")

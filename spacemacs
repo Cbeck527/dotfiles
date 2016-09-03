@@ -3,13 +3,13 @@
 ;; It must be stored in your home directory.
 
 (defun save-framegeometry ()
-  "Gets the current frame's geometry and saves to ~/.emacs.d/framegeometry."
+  "Gets the current frame's geometry and saves to ~/.emacs.d/private/framegeometry."
   (let (
         (framegeometry-left (frame-parameter (selected-frame) 'left))
         (framegeometry-top (frame-parameter (selected-frame) 'top))
         (framegeometry-width (frame-parameter (selected-frame) 'width))
         (framegeometry-height (frame-parameter (selected-frame) 'height))
-        (framegeometry-file (expand-file-name "~/.emacs.d/framegeometry"))
+        (framegeometry-file (expand-file-name "~/.emacs.d/private/framegeometry"))
         )
 
     (when (not (number-or-marker-p framegeometry-left))
@@ -38,7 +38,7 @@
 (defun load-framegeometry ()
   "Loads ~/.emacs.d/framegeometry which should load the previous frame's
 geometry."
-  (let ((framegeometry-file (expand-file-name "~/.emacs.d/framegeometry")))
+  (let ((framegeometry-file (expand-file-name "~/.emacs.d/private/framegeometry")))
     (when (file-readable-p framegeometry-file)
       (load-file framegeometry-file)))
   )
@@ -145,11 +145,9 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Inconsolata"
-                               :size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.4)
+                               :powerline-scale 1)
    ;; The leader key
    dotspacemacs-leader-key ","
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -157,7 +155,7 @@ values."
    dotspacemacs-emacs-leader-key "M-m"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key "SPC"
+   dotspacemacs-major-mode-leader-key "`"
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m)
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
@@ -196,10 +194,10 @@ values."
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
+   dotspacemacs-helm-resize t
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
+   dotspacemacs-helm-no-header t
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
    dotspacemacs-helm-position 'bottom
@@ -294,6 +292,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (progn
         (add-hook 'after-init-hook 'load-framegeometry)
         (add-hook 'kill-emacs-hook 'save-framegeometry)))
+
+  (setq-default flycheck-flake8-maximum-line-length 99)
+
+  ;; use magit in fullscreen mode
+  (setq-default git-magit-status-fullscreen t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -310,11 +313,24 @@ you should place your code here."
   ;; j and k should behave like gj and gk
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+  (setq vc-follow-symlinks t)
+
+  ;; disable all the space-doc stuff
+  (setq spacemacs-space-doc-modificators nil)
 
   ;; Powerline setup
   (setq powerline-default-separator nil)
   (spaceline-compile)
+
+  ;; NeoTree Setup
   (setq neo-theme 'nerd)
+  (setq neo-smart-open nil)
+
+  ;; dump me into the scratch buffer
   (switch-to-buffer "*scratch*")
   )
 (custom-set-variables
