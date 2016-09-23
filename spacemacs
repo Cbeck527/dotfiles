@@ -27,6 +27,7 @@ values."
      osx
      python
      shell-scripts
+     spell-checking
      syntax-checking
      terraform
      (version-control :variables
@@ -41,7 +42,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(smartparens)
+   dotspacemacs-excluded-packages '(smartparens
+                                    spaceline)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -251,6 +253,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq-default flycheck-flake8-maximum-line-length 99)
 
+  ;; make it a little easier to browse repos
+  (setq helm-candidate-number-limit 20)
+  (setq projectile-indexing-method 'alien)
+
   ;; use magit in fullscreen mode
   (setq-default git-magit-status-fullscreen t)
   )
@@ -278,17 +284,35 @@ you should place your code here."
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
 
-  ;; Powerline setup
-  (setq powerline-default-separator nil)
-  (spaceline-compile)
+  ;; open projectile-dired with , p P
+  (spacemacs/set-leader-keys "pP"  'projectile-switch-project-dired)
 
-  ;; NeoTree Setup
-  (setq neo-theme 'nerd)
-  (setq neo-smart-open nil)
+  ;; mode-line setup
+  (setq mode-line-format
+        '("%e" mode-line-front-space
+          ;; Standard info about the current buffer
+          mode-line-mule-info
+          mode-line-client
+          mode-line-modified
+          mode-line-frame-identification
+          mode-line-buffer-identification " " mode-line-position
+          ;; Some specific information about the current buffer:
+          ;; (vc-mode lunaryorn-vc-mode-line) ; VC information
+          (flycheck-mode flycheck-mode-line) ; Flycheck status
+          (multiple-cursors-mode mc/mode-line) ; Number of cursors
+          ;; And the modes, which I don't really care for anyway
+          " " mode-line-modes mode-line-end-spaces))
 
   ;; dump me into the scratch buffer
-  (switch-to-buffer "*scratch*")
-  )
+  (switch-to-buffer "*scratch*"))
+
+(defun projectile-switch-project-dired ()
+  "open projectile-dired with , p P"
+  (interactive)
+  (progn
+    (setq projectile-switch-project-action 'projectile-dired)
+    (helm-projectile-switch-project)
+    (setq projectile-switch-project-action 'helm-projectile)))
 
 (defun save-framegeometry ()
   "Gets the current frame's geometry and saves to ~/.emacs.d/private/framegeometry."
