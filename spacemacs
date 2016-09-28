@@ -101,6 +101,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
+   dotspacemacs-default-font '("Monaco"
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1)
