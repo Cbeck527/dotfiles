@@ -42,7 +42,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(smartparens
+   dotspacemacs-excluded-packages '(neotree
+                                    smartparens
                                     spaceline)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -268,9 +269,6 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-
-  ;; bind command-K to neotree
-  (global-set-key (kbd "s-k") 'neotree-toggle)
 
   ;; j and k should behave like gj and gk
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
