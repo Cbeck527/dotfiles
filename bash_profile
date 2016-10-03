@@ -42,6 +42,7 @@ man() {
 alias grep="grep --color=auto"
 
 # Vars
+export EDITOR=vim
 export CLICOLOR=1
 export HISTCONTROL=ignoreboth
 export PAGER="less -q"
