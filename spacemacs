@@ -327,6 +327,9 @@ you should place your code here."
   ;; open projectile-dired with , p P
   (spacemacs/set-leader-keys "pP"  'projectile-switch-project-dired)
 
+  ;; helm-M-x like the good ol' days
+  (spacemacs/set-leader-keys ":"  'helm-M-x)
+
   ;; mode-line setup
   (setq mode-line-format
         '("%e" mode-line-front-space
