@@ -27,6 +27,7 @@ values."
      markdown
      osx
      python
+     ruby
      shell-scripts
      spell-checking
      syntax-checking
@@ -41,7 +42,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(helm-flx)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -120,7 +121,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("M+ 1mn"
+   dotspacemacs-default-font '("M+ 1mn" ;; "Inconsolata" "Monaco"
                                :size 15
                                :weight normal
                                :width normal
@@ -276,6 +277,44 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; mode-line setup
+  (defvar cb-projectile-mode-line
+    '(:propertize
+      (:eval (when (ignore-errors (projectile-project-root))
+               (concat " " (projectile-project-name))))
+      face font-lock-constant-face)
+    "Mode line format for Projectile.")
+  (put 'cb-projectile-mode-line 'risky-local-variable t)
+  (defvar cb-vc-mode-line
+    '(" " (:propertize
+           ;; Strip the backend name from the VC status information
+           (:eval (let ((backend (symbol-name (vc-backend (buffer-file-name)))))
+                    (substring vc-mode (+ (length backend) 2))))
+           face font-lock-variable-name-face))
+    "Mode line format for VC Mode.")
+  (put 'cb-vc-mode-line 'risky-local-variable t)
+  (setq-default mode-line-position
+                '((-3 "%p") (size-indication-mode ("/" (-4 "%I")))
+                  " "
+                  (line-number-mode
+                   ("%l" (column-number-mode ":%c")))))
+  (setq-default mode-line-format
+                '("%e" mode-line-front-space
+                  ;; Standard info about the current buffer
+                  mode-line-mule-info
+                  mode-line-client
+                  mode-line-modified
+                  mode-line-remote
+                  mode-line-frame-identification
+                  mode-line-buffer-identification " " mode-line-position
+                  ;; Some specific information about the current buffer:
+                  cb-projectile-mode-line ; Project information
+                  " "
+                  (vc-mode cb-vc-mode-line) ; VC information
+                  (flycheck-mode flycheck-mode-line) ; Flycheck status
+                  ;; And the modes, which I don't really care for anyway
+                  " " mode-line-modes mode-line-end-spaces))
+
   ;; Solarized tweaks
   (setq solarized-distinct-fringe-background t)
   (setq solarized-use-less-bold t)
@@ -300,6 +339,17 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; make it a little easier to browse repos
   (setq helm-candidate-number-limit 20)
   (setq projectile-indexing-method 'alien)
+  ;; speed up helm: this will increase the garbage collection time while the
+  ;; minibuffer is open
+  (defvar helm-ido-like-user-gc-setting nil)
+  (defun helm-ido-like-higher-gc ()
+    (setq helm-ido-like-user-gc-setting gc-cons-threshold)
+    (setq gc-cons-threshold most-positive-fixnum))
+  (defun helm-ido-like-lower-gc ()
+    (setq gc-cons-threshold helm-ido-like-user-gc-setting))
+  (defun helm-ido-like-load-fuzzy-enhancements ()
+    (add-hook 'minibuffer-setup-hook #'helm-ido-like-higher-gc)
+    (add-hook 'minibuffer-exit-hook #'helm-ido-like-lower-gc))
 
   ;; use magit in fullscreen mode
   (setq-default git-magit-status-fullscreen t)
@@ -320,6 +370,8 @@ you should place your code here."
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
   (setq vc-follow-symlinks t)
+  ;; diffs on the left
+  (setq diff-hl-side 'left)
 
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
@@ -327,24 +379,12 @@ you should place your code here."
   ;; open projectile-dired with , p P
   (spacemacs/set-leader-keys "pP"  'projectile-switch-project-dired)
 
+  ;; helm-semantic-or-imenu
+  (spacemacs/set-leader-keys "fi"  'helm-semantic-or-imenu)
+
+
   ;; helm-M-x like the good ol' days
   (spacemacs/set-leader-keys ":"  'helm-M-x)
-
-  ;; mode-line setup
-  (setq mode-line-format
-        '("%e" mode-line-front-space
-          ;; Standard info about the current buffer
-          mode-line-mule-info
-          mode-line-client
-          mode-line-modified
-          mode-line-frame-identification
-          mode-line-buffer-identification " " mode-line-position
-          ;; Some specific information about the current buffer:
-          ;; (vc-mode lunaryorn-vc-mode-line) ; VC information
-          (flycheck-mode flycheck-mode-line) ; Flycheck status
-          (multiple-cursors-mode mc/mode-line) ; Number of cursors
-          ;; And the modes, which I don't really care for anyway
-          " " mode-line-modes mode-line-end-spaces))
 
   ;; dump me into the scratch buffer
   (switch-to-buffer "*scratch*"))

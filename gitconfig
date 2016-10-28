@@ -3,7 +3,7 @@
   email = cbeck527@gmail.com
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  edit = "!mvim `git ls-files -m` -p"
+  up = pull --rebase --autostash
 [color]
   diff = auto
 [core]
@@ -17,10 +17,6 @@
   prune = true
 [hub]
   protocol = ssh
-[github]
-  user = cbeck527
-[ghi]
-  token = !security find-internet-password -a  -s github.com -l 'ghi token' -w
 
 [merge]
   tool = Kaleidoscope
@@ -42,8 +38,6 @@
   trustexitcode = true
 [difftool]
   prompt = false
-[git-up "bundler"]
-  check = false
 [filter "lfs"]
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f

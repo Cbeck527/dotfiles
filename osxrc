@@ -17,6 +17,9 @@ export CPPFLAGS=-Qunused-arguments
 # rvm fun
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+# iTerm2 inspection script
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
 # GOLANG!
 export GOPATH=$HOME/go
 export PATH=$PATH:$HOME/go/bin
