@@ -133,7 +133,7 @@ values."
    dotspacemacs-emacs-leader-key "M-m"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key "`"
+   dotspacemacs-major-mode-leader-key "-"
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m)
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
@@ -228,7 +228,7 @@ values."
    ;; If non nil show the color guide hint for transient state keys. (default t)
    dotspacemacs-show-transient-state-color-guide t
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
@@ -317,13 +317,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Solarized tweaks
   (setq solarized-distinct-fringe-background t)
-  (setq solarized-use-less-bold t)
   ;; Avoid all font-size changes
-  (setq solarized-height-minus-1 1)
-  (setq solarized-height-plus-1 1)
-  (setq solarized-height-plus-2 1)
-  (setq solarized-height-plus-3 1)
-  (setq solarized-height-plus-4 1)
+  (setq solarized-use-less-bold t)
 
   ;; Don't spray custom-* stuff all over my ~/.spacemacs
   (setq custom-file "~/.emacs.d/private/custom.el")
@@ -338,7 +333,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; make it a little easier to browse repos
   (setq helm-candidate-number-limit 20)
-  (setq projectile-indexing-method 'alien)
+  (setq projectile-indexing-method 'git)
+  (setq projectile-enable-caching t)
   ;; speed up helm: this will increase the garbage collection time while the
   ;; minibuffer is open
   (defvar helm-ido-like-user-gc-setting nil)
@@ -372,6 +368,9 @@ you should place your code here."
   (setq vc-follow-symlinks t)
   ;; diffs on the left
   (setq diff-hl-side 'left)
+  ;; magit shortcuts
+  (spacemacs/set-leader-keys "gB"  'magit-branch-and-checkout)
+  (spacemacs/set-leader-keys "gR"  'magit-rebase-interactive)
 
   ;; disable all the space-doc stuff
   (setq spacemacs-space-doc-modificators nil)
