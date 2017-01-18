@@ -278,13 +278,6 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; mode-line setup
-  (defvar cb-projectile-mode-line
-    '(:propertize
-      (:eval (when (ignore-errors (projectile-project-root))
-               (concat " " (projectile-project-name))))
-      face font-lock-constant-face)
-    "Mode line format for Projectile.")
-  (put 'cb-projectile-mode-line 'risky-local-variable t)
   (defvar cb-vc-mode-line
     '(" " (:propertize
            ;; Strip the backend name from the VC status information
@@ -306,10 +299,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
                   mode-line-modified
                   mode-line-remote
                   mode-line-frame-identification
-                  mode-line-buffer-identification " " mode-line-position
+                  ;; colored buffer name
+                  (:propertize "%b" face font-lock-variable-name-face)
+                  ;; little breathing room
+                  "  "
+                  mode-line-position
                   ;; Some specific information about the current buffer:
-                  cb-projectile-mode-line ; Project information
-                  " "
+                  ;; Colored version control status
                   (vc-mode cb-vc-mode-line) ; VC information
                   (flycheck-mode flycheck-mode-line) ; Flycheck status
                   ;; And the modes, which I don't really care for anyway
