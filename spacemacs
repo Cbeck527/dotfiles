@@ -16,6 +16,7 @@ values."
    dotspacemacs-configuration-layers
    '(
      ansible
+     deft
      docker
      emacs-lisp
      git
@@ -25,17 +26,21 @@ values."
      helm
      javascript
      markdown
+     nginx
+     (org :variables
+          org-enable-bootstrap-support t
+          org-enable-github-support t
+          org-enable-reveal-js-support t
+          org-projectile-file "TODOs.org")
      osx
      python
      ruby
      shell-scripts
      spell-checking
      syntax-checking
-     terraform
      (version-control :variables
                       version-control-global-margin t
                       version-control-diff-tool 'diff-hl)
-     vim-empty-lines
      yaml
      )
    ;; List of additional packages that will be installed without being
@@ -286,11 +291,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
            face font-lock-variable-name-face))
     "Mode line format for VC Mode.")
   (put 'cb-vc-mode-line 'risky-local-variable t)
-  (setq-default mode-line-position
-                '((-3 "%p") (size-indication-mode ("/" (-4 "%I")))
-                  " "
-                  (line-number-mode
-                   ("%l" (column-number-mode ":%c")))))
+  (setq-default mode-line-position '((-3 "%p") " " "L" (line-number-mode "%l")))
   (setq-default mode-line-format
                 '("%e" mode-line-front-space
                   ;; Standard info about the current buffer
@@ -313,6 +314,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Solarized tweaks
   (setq solarized-distinct-fringe-background t)
+  (setq-default left-fringe-width 10)
+  (setq-default right-fringe-width 0)
   ;; Avoid all font-size changes
   (setq solarized-use-less-bold t)
 
@@ -361,11 +364,13 @@ you should place your code here."
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
-  (setq vc-follow-symlinks t)
   ;; diffs on the left
   (setq diff-hl-side 'left)
-  ;; magit shortcuts
+
+  ;; magit version control config
+  (setq vc-follow-symlinks t)
   (spacemacs/set-leader-keys "gB"  'magit-branch-and-checkout)
+  (spacemacs/set-leader-keys "gC"  'magit-checkout)
   (spacemacs/set-leader-keys "gR"  'magit-rebase-interactive)
 
   ;; disable all the space-doc stuff
@@ -377,9 +382,18 @@ you should place your code here."
   ;; helm-semantic-or-imenu
   (spacemacs/set-leader-keys "fi"  'helm-semantic-or-imenu)
 
-
   ;; helm-M-x like the good ol' days
   (spacemacs/set-leader-keys ":"  'helm-M-x)
+
+  ;; spell-check
+  (spacemacs/set-leader-keys "Sc"  'flyspell-correct-word-generic)
+
+  ;; org-mode fun!
+  (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.0.0/")
+
+  ;; deft-mode setup
+  (setq deft-directory "~/Library/Mobile Documents/com~apple~CloudDocs/notes/")
+  (setq deft-use-filename-as-title t)
 
   ;; dump me into the scratch buffer
   (switch-to-buffer "*scratch*"))
