@@ -318,6 +318,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq-default left-fringe-width 10)
   (setq-default right-fringe-width 0)
   ;; Avoid all font-size changes
+  (setq solarized-use-variable-pitch nil
+        solarized-scale-org-headlines nil)
   (setq solarized-use-less-bold t)
 
   ;; Don't spray custom-* stuff all over my ~/.spacemacs
