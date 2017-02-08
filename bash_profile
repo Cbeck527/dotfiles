@@ -7,6 +7,7 @@ shopt -s histappend
 
 # Normal ol' aliases
 alias reloadprofile='. ~/.bash_profile'
+alias incognito='unset HISTFILE'
 
 # git aliases
 alias ga='git add'
@@ -61,6 +62,9 @@ function syspip() {
   PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
+function syspip3() {
+  PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+}
 export PYTHONDONTWRITEBYTECODE=1
 
 export VIRTUALENVS_HOME=$WORKON_HOME
