@@ -292,26 +292,55 @@ before packages are loaded. If you are unsure, you should try in setting them in
            face font-lock-variable-name-face))
     "Mode line format for VC Mode.")
   (put 'cb-vc-mode-line 'risky-local-variable t)
-  (setq-default mode-line-position '((-3 "%p") " " "L" (line-number-mode "%l")))
+  (defun shorten-directory (dir max-length)
+    "Show up to `max-length' characters of a directory name `dir'."
+    (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
+          (output ""))
+      (when (and path (equal "" (car path)))
+        (setq path (cdr path)))
+      (while (and path (< (length output) (- max-length 4)))
+        (setq output (concat (car path) "/" output))
+        (setq path (cdr path)))
+      (when path
+        (setq output (concat ".../" output)))
+      output))
+  (defvar mode-line-directory
+    '(:propertize
+      (:eval (if (buffer-file-name) (concat " " (shorten-directory default-directory 20)) " "))
+      face font-lock-comment-face)
+    "Formats the current directory.")
+  (put 'mode-line-directory 'risky-local-variable t)
+  (setq mode-line-position
+        '(;; %I print the size of the buffer, with kmG etc
+          (size-indication-mode (-4 "%I"))
+          " "
+          ;; %l print the current line number
+          ;; %c print the current column
+          (line-number-mode ("%l" (column-number-mode ":%c")))))
   (setq-default mode-line-format
                 '("%e" mode-line-front-space
                   ;; Standard info about the current buffer
                   mode-line-mule-info
                   mode-line-client
                   mode-line-modified
-                  mode-line-remote
-                  mode-line-frame-identification
+                  ;; mode-line-remote
+                  ;; mode-line-frame-identification
+                  " "
+                  mode-line-directory
                   ;; colored buffer name
                   (:propertize "%b" face font-lock-variable-name-face)
                   ;; little breathing room
-                  "  "
+                  " "
                   mode-line-position
                   ;; Some specific information about the current buffer:
                   ;; Colored version control status
-                  (vc-mode cb-vc-mode-line) ; VC information
+                  (vc-mode cb-vc-mode-line)
                   (flycheck-mode flycheck-mode-line) ; Flycheck status
                   ;; And the modes, which I don't really care for anyway
-                  " " mode-line-modes mode-line-end-spaces))
+                  " "
+                  mode-line-modes
+                  mode-line-misc-info
+                  mode-line-end-spaces))
 
   ;; Solarized tweaks
   (setq solarized-distinct-fringe-background t)
