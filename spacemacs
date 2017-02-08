@@ -33,7 +33,8 @@ values."
           org-enable-reveal-js-support t
           org-projectile-file "TODOs.org")
      osx
-     python
+     (python :variables
+             python-test-runner '(pytest nose))
      ruby
      shell-scripts
      spell-checking
@@ -126,8 +127,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("M+ 1mn" ;; "Inconsolata" "Monaco"
-                               :size 15
+   dotspacemacs-default-font '("M+ 1m Regular"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1)
