@@ -48,7 +48,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(helm-flx)
+   dotspacemacs-additional-packages '(groovy-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -380,6 +380,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; use magit in fullscreen mode
   (setq-default git-magit-status-fullscreen t)
+
+  ;; disable annoying shell warning
+  (setq exec-path-from-shell-check-startup-files nil)
   )
 
 (defun dotspacemacs/user-config ()
@@ -410,6 +413,8 @@ you should place your code here."
 
   ;; open projectile-dired with , p P
   (spacemacs/set-leader-keys "pP"  'projectile-switch-project-dired)
+  ;; open magit-status on project with , p G
+  (spacemacs/set-leader-keys "pG"  'projectile-switch-project-magit)
 
   ;; helm-semantic-or-imenu
   (spacemacs/set-leader-keys "fi"  'helm-semantic-or-imenu)
@@ -422,6 +427,9 @@ you should place your code here."
 
   ;; org-mode fun!
   (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.0.0/")
+  (setq org-confirm-babel-evaluate nil)
+  (with-eval-after-load 'org
+    (setq org-src-tab-acts-natively t))
 
   ;; deft-mode setup
   (setq deft-directory "~/Library/Mobile Documents/com~apple~CloudDocs/notes/")
@@ -435,6 +443,14 @@ you should place your code here."
   (interactive)
   (progn
     (setq projectile-switch-project-action 'projectile-dired)
+    (helm-projectile-switch-project)
+    (setq projectile-switch-project-action 'helm-projectile)))
+
+(defun projectile-switch-project-magit ()
+  "open projectile-dired with , p G"
+  (interactive)
+  (progn
+    (setq projectile-switch-project-action 'magit-status)
     (helm-projectile-switch-project)
     (setq projectile-switch-project-action 'helm-projectile)))
 

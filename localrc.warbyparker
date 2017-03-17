@@ -2,8 +2,6 @@
 export AWS_PROFILE=warby
 
 # Warby Parker specific aliases
-export PATH=$PATH:~/Code/hegemon/scripts
-export HEGEMON_ENVIRONMENT=vagrant
 alias warp='ssh chris.becker@warp'
 
 # Crude support logging system

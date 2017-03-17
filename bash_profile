@@ -244,8 +244,12 @@ fi
 if [ -f ~/.dotfiles/git_functions.sh ]; then
     source ~/.dotfiles/git_functions.sh
 fi
-# add FZF (fuzzy finder) if present
+# add FZF (fuzzy finder) if present, and setup commands
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='
+  (git ls-tree -r --name-only HEAD ||
+   ag -g "") 2> /dev/null'
+export FZF_DEFAULT_OPTS="--no-height --color 'fg:#839496,fg+:#93a1a1,bg+:#073642'"
 
 # Handle resizes gracefully.
 shopt -s checkwinsize
