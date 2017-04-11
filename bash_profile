@@ -76,11 +76,6 @@ else
 fi
 
 
-if [ -d "${HOME}/.bin" ]; then
-  PATH="${HOME}/.bin:$PATH"
-fi
-
-export PATH=/usr/local/bin:$PATH
 
 # bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -147,14 +142,6 @@ function venv_prompt() {
   printf " $(basename $VIRTUAL_ENV)"
 }
 
-function aws_credentials() {
-  if [ "$AWS_PROFILE" = "warby" ]; then
-    printf " wp"
-  else
-    return 1
-  fi
-}
-
 # marks
 export MARKPATH=$HOME/.marks
 function jump {
@@ -210,13 +197,13 @@ function reset_prompt {
     local HOST_PROMPT="@\h"
   fi
 
-  export PS1="${GREEN}\u${HOST_PROMPT}${TEAL}$(aws_credentials) ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
+  export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(prompt_git)${LIGHT_GRAY} \$ ${NONE}"
   PS2='> '
   PS4='+ '
 }
 
 # handy aws completion
-if [ -f /usr/local/bin/aws ]; then
+if type aws > /dev/null 2>&1; then
   complete -C aws_completer aws
 fi
 
@@ -240,10 +227,6 @@ if [ -f ~/.secretsrc ]; then
     source ~/.secretsrc
 fi
 
-# add git functions if they are present
-if [ -f ~/.dotfiles/git_functions.sh ]; then
-    source ~/.dotfiles/git_functions.sh
-fi
 # add FZF (fuzzy finder) if present, and setup commands
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_COMMAND='
@@ -253,5 +236,12 @@ export FZF_DEFAULT_OPTS="--no-height --color 'fg:#839496,fg+:#93a1a1,bg+:#073642
 
 # Handle resizes gracefully.
 shopt -s checkwinsize
+
+# only export PATH once
+PATH=/usr/local/bin:$PATH
+if [ -d "${HOME}/.bin" ]; then
+    PATH="${HOME}/.bin:$PATH"
+fi
+export PATH=$PATH
 
 reset_prompt

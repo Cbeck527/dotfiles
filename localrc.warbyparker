@@ -12,4 +12,4 @@ helping() {
 # Ansible and Vagrant Fun
 export ANSIBLE_NOCOWS=1
 export ANSIBLE_SSH_ARGS=""
-export VAGRANT_DEFAULT_PROVIDER=vmware_fusion
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
