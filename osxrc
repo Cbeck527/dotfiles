@@ -2,13 +2,22 @@
 
 alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
 alias dnscache='dscacheutil -flushcache'
-alias e.='open -a MacVim .'
-alias e='open -a MacVim'
-alias ee='open -a Emacs'
+alias e='emacs -nw'
 alias f='fab'
 alias o.="open ."
 alias v='vagrant'
 
+# change my terminal colors
+function solarized {
+    if [ "$ITERM_PROFILE" = solarized-dark ]
+    then
+        echo -e "\033]50;SetProfile=solarized-light\a"
+        export ITERM_PROFILE=solarized-light
+    else
+        echo -e "\033]50;SetProfile=solarized-dark\a"
+        export ITERM_PROFILE=solarized-dark
+    fi
+}
 
 # good ol compiling things
 export CFLAGS=-Qunused-arguments
@@ -22,7 +31,7 @@ export GOPATH=$HOME/go
 PATH=$PATH:$HOME/go/bin
 
 # Homebrew fun
-HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_ANALYTICS=1
 
 # GPG Setup
 if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
