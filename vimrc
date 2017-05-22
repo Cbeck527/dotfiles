@@ -27,7 +27,10 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 filetype plugin indent on
-set viminfo='100,n$HOME/.vim/files/viminfo
+
+if filereadable(expand("~/.vim/files/viminfo"))
+    set viminfo='100,n$HOME/.vim/files/viminfo
+endif
 
 " enable syntax highlighting
 syntax enable
