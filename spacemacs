@@ -15,7 +15,11 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     sql
      ansible
+     (auto-completion :variables
+                      auto-completion-return-key-behavior nil
+                      auto-completion-tab-key-behavior 'complete)
      deft
      docker
      emacs-lisp
@@ -37,8 +41,10 @@ values."
              python-test-runner '(pytest nose))
      ruby
      shell-scripts
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil)
      syntax-checking
+     swift
      (version-control :variables
                       version-control-global-margin t
                       version-control-diff-tool 'diff-hl)
@@ -48,7 +54,8 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(groovy-mode)
+   dotspacemacs-additional-packages '(groovy-mode
+                                      typescript-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -383,6 +390,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; disable annoying shell warning
   (setq exec-path-from-shell-check-startup-files nil)
+
+  ;; set window title to buffer title
+  (setq frame-title-format "%b")
   )
 
 (defun dotspacemacs/user-config ()
@@ -436,7 +446,8 @@ you should place your code here."
   (setq deft-use-filename-as-title t)
 
   ;; dump me into the scratch buffer
-  (switch-to-buffer "*scratch*"))
+  (switch-to-buffer "*scratch*")
+)
 
 (defun projectile-switch-project-dired ()
   "open projectile-dired with , p P"
