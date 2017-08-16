@@ -1,4 +1,5 @@
 # general
+export TERM=xterm-256color
 export CLICOLOR=1
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
@@ -10,7 +11,7 @@ set bell-style none
 export HISTFILESIZE=99999999
 export HISTSIZE=99999999
 export HISTCONTROL=ignoreboth
-export PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a;history -c;history -r;echo -n -e '\033k\033\\';$PROMPT_COMMAND"
 shopt -s histappend
 
 # agnostic aliases
@@ -135,10 +136,13 @@ fi
 # add FZF (fuzzy finder) if present, and setup commands
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_COMMAND='
-  (git ls-tree -r --name-only HEAD ||
-   ag -g "") 2> /dev/null'
-export FZF_DEFAULT_OPTS="--no-height --color 'fg:#839496,fg+:#93a1a1,bg+:#073642'"
-
+    (git ls-tree -r --name-only HEAD ||
+    ag -g "") 2> /dev/null'
+export FZF_DEFAULT_OPTS="
+    --no-height
+    --color fg:-1,bg:-1,hl:136,fg+:254,bg+:-1,hl+:136
+    --color info:136,prompt:136,pointer:230,marker:230,spinner:136
+"
 # Handle resizes gracefully.
 shopt -s checkwinsize
 
