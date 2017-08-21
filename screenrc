@@ -26,3 +26,5 @@ hardstatus string '%{= kG}[ %{c}%H %{= kG}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?
 caption splitonly
 caption string '%{= kG}[ %{= kw}%n %t %{= kG}]'
 windowlist string '%4n %t [%h]%=%f'
+
+bindkey -m ' ' eval 'stuff \040' 'writebuf' 'exec sh -c "/usr/bin/pbcopy < /tmp/screen-exchange"'
