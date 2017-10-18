@@ -172,3 +172,7 @@ export PS4='+ '
 }
 
 reset_prompt
+
+# Local Variables:
+# mode: shell-script
+# End:
