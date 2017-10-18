@@ -29,7 +29,8 @@ values."
      html
      helm
      javascript
-     markdown
+     (markdown :variables
+               '(markdown-pre-face ((t (:foreground "#586e75")))))
      nginx
      (org :variables
           org-enable-bootstrap-support t

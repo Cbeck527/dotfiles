@@ -11,7 +11,7 @@ set bell-style none
 export HISTFILESIZE=99999999
 export HISTSIZE=99999999
 export HISTCONTROL=ignoreboth
-export PROMPT_COMMAND="history -a;history -c;history -r;echo -n -e '\033k\033\\';$PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a;history -c;history -r;echo -n -e '\033k\033\\'"
 shopt -s histappend
 
 # agnostic aliases

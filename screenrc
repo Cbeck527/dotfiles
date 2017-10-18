@@ -1,7 +1,8 @@
 startup_message off
-shell -/bin/bash
+shell -$SHELL
 defscrollback 10000
 vbell off
+altscreen on
 
 chdir $HOME
 screen -t home
@@ -18,8 +19,8 @@ termcapinfo xterm* 'ti@:te@:Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' XT
 defbce on
 
 defencoding UTF-8
-
-shelltitle '$ |bash'
+bind x
+bind ^x
 hardstatus on
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{c}%H %{= kG}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{= kG}][%{c} %l %{= kG}]'
