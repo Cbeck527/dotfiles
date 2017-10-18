@@ -52,28 +52,7 @@ man() {
 }
 
 # Python
-export PIP_REQUIRE_VIRTUALENV=true
-export PIP_RESPECT_VIRTUALENV=true
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PYTHONDONTWRITEBYTECODE=1
-export VIRTUALENVS_HOME=$WORKON_HOME
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-export WORKON_HOME=$HOME/.virtualenvs
-
-function syspip() {
-  PIP_REQUIRE_VIRTUALENV="" pip "$@"
-}
-
-function syspip3() {
-  PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
-}
-
-if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
-    source /usr/local/bin/virtualenvwrapper.sh
-else
-    echo "WARNING: Can't find virtualenvwrapper.sh"
-fi
 
 function venv_prompt() {
   if ! [[ $VIRTUAL_ENV ]]; then
