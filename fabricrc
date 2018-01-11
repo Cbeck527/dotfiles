@@ -94,3 +94,7 @@ function __fab_completion() {
     COMPREPLY=($(compgen -W "$opts" -- $cur))
 }
 complete -o default -o nospace -F __fab_completion fab
+
+# Local Variables:
+# mode: shell-script
+# End:

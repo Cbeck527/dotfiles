@@ -44,3 +44,5 @@
   required = true
 [rebase]
   autostash = true
+[magit]
+	hideCampaign = true

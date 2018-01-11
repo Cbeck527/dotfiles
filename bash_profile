@@ -58,7 +58,7 @@ function venv_prompt() {
   if ! [[ $VIRTUAL_ENV ]]; then
     return 1
   fi
-  printf " $(basename $VIRTUAL_ENV)"
+  printf " %s" "$(basename $VIRTUAL_ENV)"
 }
 
 # marks
@@ -160,10 +160,10 @@ function reset_prompt {
   SOLAR_GREEN=$(tput setaf 64)
   SOLAR_WHITE=$(tput setaf 254)
 
-  if [ $(hostname) = "beckbook" ] || [ $(hostname) = "beckbook-pro" ] || $(hostname) = "beck-mini" ]; then
+  if [ "$(hostname)" = "beckbook" ] || [ "$(hostname)" = "beckbook-pro" ] || [ "$(hostname)" = "beck-mini" ]; then
     local HOST_PROMPT=""
   else
-    local HOST_PROMPT="@\h"
+    local HOST_PROMPT='@\h'
   fi
 
 export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(vcprompt -f ' [%b${RED}%u%m${BLUE}]')${LIGHT_GRAY} \$ ${NONE}"
