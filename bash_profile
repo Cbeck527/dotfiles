@@ -160,7 +160,7 @@ function reset_prompt {
   SOLAR_GREEN=$(tput setaf 64)
   SOLAR_WHITE=$(tput setaf 254)
 
-  if [ "$(hostname)" = "beckbook" ] || [ "$(hostname)" = "beckbook-pro" ] || [ "$(hostname)" = "beck-mini" ]; then
+  if [ "$(hostname)" = "beckbook" ] || [ "$(hostname)" = "beckbook-pro" ] || [ "$(hostname)" = "beck-5k" ]; then
     local HOST_PROMPT=""
   else
     local HOST_PROMPT='@\h'

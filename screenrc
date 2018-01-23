@@ -4,13 +4,6 @@ defscrollback 10000
 vbell off
 altscreen on
 
-chdir $HOME
-screen -t home
-
-# pick the window you want to start in; if you do this twice the first one
-# will be your "last" window (for quick switching)
-select 0
-
 # 1) allow bold colors - necessary for some reason
 # 2) tell screen how to set colors. AB = background, AF=foreground
 # 3) erase background with current bg color
