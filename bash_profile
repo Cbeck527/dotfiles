@@ -102,11 +102,6 @@ if [ -f ~/.osxrc ]; then
     source ~/.osxrc
 fi
 
-# use .localrc for settings specific to one system
-if [ -f ~/.localrc ]; then
-    source ~/.localrc
-fi
-
 # use .secretsrc for API keys and sensitive info
 if [ -f ~/.secretsrc ]; then
     source ~/.secretsrc
@@ -124,13 +119,6 @@ export FZF_DEFAULT_OPTS="
 "
 # Handle resizes gracefully.
 shopt -s checkwinsize
-
-# export PATH
-PATH=/usr/local/bin:$PATH
-if [ -d "${HOME}/.bin" ]; then
-    PATH="${HOME}/.bin:$PATH"
-fi
-export PATH=$PATH
 
 # prompt
 function reset_prompt {
@@ -170,6 +158,18 @@ export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLU
 export PS2='> '
 export PS4='+ '
 }
+
+# use .localrc for settings specific to one system
+if [ -f ~/.localrc ]; then
+    source ~/.localrc
+fi
+
+# export PATH
+PATH=/usr/local/bin:$PATH
+if [ -d "${HOME}/.bin" ]; then
+    PATH="${HOME}/.bin:$PATH"
+fi
+export PATH=$PATH
 
 reset_prompt
 

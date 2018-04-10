@@ -45,4 +45,6 @@
 [rebase]
   autostash = true
 [magit]
-	hideCampaign = true
+  hideCampaign = true
+[github]
+  user = Cbeck527
