@@ -35,6 +35,7 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     rust
      csv
      sql
      ansible
@@ -187,7 +188,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("M+ 1m"
+   dotspacemacs-default-font '("M+ 1mn"
                                :size 16
                                :weight normal
                                :width normal
@@ -445,9 +446,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                   mode-line-end-spaces))
 
   ;; Solarized tweaks
-  (setq solarized-distinct-fringe-background t)
-  (setq-default left-fringe-width 10)
-  (setq-default right-fringe-width 0)
+  (setq display-line-numbers-width-start t)
   ;; Avoid all font-size changes
   (setq solarized-use-variable-pitch nil
         solarized-scale-org-headlines nil)
@@ -538,7 +537,7 @@ you should place your code here."
   (spacemacs/set-leader-keys "gdb" 'magit-diff-buffer-file)
 
   ;; org-mode fun!
-  (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.0.0/")
+  (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.6.0/")
   (setq org-confirm-babel-evaluate nil)
   (with-eval-after-load 'org
     (setq org-src-tab-acts-natively t))
