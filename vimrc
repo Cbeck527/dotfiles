@@ -4,16 +4,12 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'hashivim/vim-terraform'
-Plugin 'mbbill/undotree'
 Plugin 'rking/ag.vim'
-Plugin 'scrooloose/nerdtree'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-surround'
 call vundle#end()
@@ -25,8 +21,6 @@ endif
 
 " enable syntax highlighting
 syntax enable
-" enable syntax checking
-let g:syntastic_python_checkers=['pylint']
 
 set autoread                                                 " reload files when changed on disk
 set backupcopy=yes                                           " see :help crontab
@@ -76,11 +70,6 @@ nmap <leader>u :UndotreeToggle<CR>
 nmap <leader>/ :TComment<cr>
 vmap <leader>/ :TComment<cr>gv
 
-" buffer fun
-nmap <leader>bl :CtrlPBuffer<CR>
-nmap <leader>bn :new<CR>
-nmap <leader>bvn :vnew<CR>
-
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -121,27 +110,7 @@ nnoremap <F1> <nop>
 nnoremap Q <nop>
 
 " plugin settings
-
-if has("persistent_undo")
-    set undodir=~/.vim/undo/
-    set undofile
-endif
-
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
-
 let g:NERDSpaceDelims=1
-let g:gitgutter_enabled = 0
-highlight SignColumn guibg=#073642
 
 " The Silver Searcher
 if executable('ag')
@@ -151,11 +120,6 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --ignore bower_components --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
-
-let g:ctrlp_match_window = 'order:ttb,max:25'
-
-" bind K to grep word under cursor
-nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " spell check my git commits
 autocmd FileType gitcommit setlocal spell
@@ -170,17 +134,10 @@ autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" Airline config
-let g:airline_powerline_fonts = 1
-
-" Signify config
-let g:signify_sign_change = '~'
-let g:signify_sign_changedelete = g:signify_sign_change
-
 " MacVim Specific
 if has("gui_macvim")
   " No toolbars, menu or scrollbars in the GUI
-  set guifont=Inconsolata\ for\ Powerline:h14
+  set guifont=M+\ 1mn:h16
   set clipboard+=unnamed
   set vb t_vb=
   set guioptions-=e  "keep tabs in VIM

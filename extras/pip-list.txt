@@ -1,5 +1,0 @@
-boto==2.38.0
-Fabric==1.10.2
-jungle==0.0.14
-virtualenv==14.0.3
-virtualenvwrapper==4.7.1

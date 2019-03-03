@@ -148,11 +148,7 @@ function reset_prompt {
   SOLAR_GREEN=$(tput setaf 64)
   SOLAR_WHITE=$(tput setaf 254)
 
-  if [ "$(hostname)" = "beckbook" ] || [ "$(hostname)" = "beckbook-pro" ] || [ "$(hostname)" = "beck-5k" ]; then
-    local HOST_PROMPT=""
-  else
-    local HOST_PROMPT='@\h'
-  fi
+  local HOST_PROMPT=""
 
 export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(vcprompt -f ' [%b${RED}%u%m${BLUE}]')${LIGHT_GRAY} \$ ${NONE}"
 export PS2='> '

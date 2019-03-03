@@ -1,8 +1,4 @@
 ;; -*- mode: emacs-lisp -*-
-(spacemacs|use-package-add-hook org
-  :pre-init
-  (package-initialize)
-)
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -52,9 +48,11 @@ This function should only modify configuration layer settings."
          go-tab-width 4
          ;; go-use-gometalinter t
          gofmt-command "goimports")
-     html
      helm
-     javascript
+     html
+     ;; ivy
+     (javascript :variables
+                 js-indent-level 2)
      (markdown :variables
                '(markdown-pre-face ((t (:foreground "#586e75")))))
      nginx
@@ -64,6 +62,7 @@ This function should only modify configuration layer settings."
           org-enable-reveal-js-support t
           org-projectile-file "TODOs.org")
      osx
+     pandoc
      (python :variables
              python-test-runner '(pytest nose))
      (ruby :variables
@@ -86,8 +85,10 @@ This function should only modify configuration layer settings."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(groovy-mode
+   dotspacemacs-additional-packages '(exec-path-from-shell
+                                      groovy-mode
                                       typescript-mode)
+
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
@@ -238,6 +239,7 @@ It should only modify the values of Spacemacs settings."
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
    dotspacemacs-large-file-size 10
+
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -246,20 +248,6 @@ It should only modify the values of Spacemacs settings."
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
-   ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize t
-   ;; if non nil, the helm header is hidden when there is only one source.
-   ;; (default nil)
-   dotspacemacs-helm-no-header t
-   ;; define the position to display `helm', options are `bottom', `top',
-   ;; `left', or `right'. (default 'bottom)
-   dotspacemacs-helm-position 'bottom
-
-   ;; Controls fuzzy matching in helm. If set to `always', force fuzzy matching
-   ;; in all non-asynchronous sources. If set to `source', preserve individual
-   ;; source settings. Else, disable fuzzy matching in all sources.
-   ;; (default 'always)
-   dotspacemacs-helm-use-fuzzy 'always
 
    ;; If non-nil, the paste transient-state is enabled. While enabled, pressing
    ;; `p' several times cycles through the elements in the `kill-ring'.
@@ -315,6 +303,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-show-transient-state-color-guide t
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
    dotspacemacs-mode-line-unicode-symbols nil
+
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
@@ -359,6 +348,30 @@ It should only modify the values of Spacemacs settings."
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
    dotspacemacs-search-tools '("ag" "grep")
+
+   ;; Format specification for setting the frame title.
+   ;; %a - the `abbreviated-file-name', or `buffer-name'
+   ;; %t - `projectile-project-name'
+   ;; %I - `invocation-name'
+   ;; %S - `system-name'
+   ;; %U - contents of $USER
+   ;; %b - buffer name
+   ;; %f - visited file name
+   ;; %F - frame name
+   ;; %s - process status
+   ;; %p - percent of buffer above top of window, or Top, Bot or All
+   ;; %P - percent of buffer above bottom of window, perhaps plus Top, or Bot or All
+   ;; %m - mode name
+   ;; %n - Narrow if appropriate
+   ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
+   ;; %Z - like %z, but including the end-of-line format
+   ;; (default "%I@%S")
+   dotspacemacs-frame-title-format "%a"
+
+   ;; Format specification for setting the icon title format
+   ;; (default nil - same as frame-title-format)
+   dotspacemacs-icon-title-format nil
+
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -445,9 +458,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                   mode-line-misc-info
                   mode-line-end-spaces))
 
-  ;; Solarized tweaks
-  (setq display-line-numbers-width-start t)
-  ;; Avoid all font-size changes
+  ;; Solarized tweaks: avoid all font-size changes
+  (setq-default display-line-numbers-width-start t)
   (setq solarized-use-variable-pitch nil
         solarized-scale-org-headlines nil)
   (setq solarized-use-less-bold t)
@@ -464,29 +476,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq-default flycheck-flake8-maximum-line-length 99)
 
   ;; make it a little easier to browse repos
-  (setq helm-candidate-number-limit 20)
-  (setq projectile-indexing-method 'git)
-  (setq projectile-enable-caching t)
-  ;; speed up helm: this will increase the garbage collection time while the
-  ;; minibuffer is open
-  (defvar helm-ido-like-user-gc-setting nil)
-  (defun helm-ido-like-higher-gc ()
-    (setq helm-ido-like-user-gc-setting gc-cons-threshold)
-    (setq gc-cons-threshold most-positive-fixnum))
-  (defun helm-ido-like-lower-gc ()
-    (setq gc-cons-threshold helm-ido-like-user-gc-setting))
-  (defun helm-ido-like-load-fuzzy-enhancements ()
-    (add-hook 'minibuffer-setup-hook #'helm-ido-like-higher-gc)
-    (add-hook 'minibuffer-exit-hook #'helm-ido-like-lower-gc))
+  ;; (setq projectile-indexing-method 'git)
+  ;; (setq projectile-enable-caching t)
 
   ;; use magit in fullscreen mode
   (setq-default git-magit-status-fullscreen t)
 
   ;; disable annoying shell warning
   (setq exec-path-from-shell-check-startup-files nil)
-
-  ;; set window title to buffer title
-  (setq frame-title-format "%b")
 
   ;; rbenv config (needed before rbenv.el loads)
   (setq rbenv-installation-dir "/usr/local")
@@ -525,10 +522,10 @@ you should place your code here."
   (spacemacs/set-leader-keys "pG"  'projectile-switch-project-magit)
 
   ;; helm-semantic-or-imenu
-  (spacemacs/set-leader-keys "fi"  'helm-semantic-or-imenu)
+  (spacemacs/set-leader-keys "fi"  'helm-imenu)
 
-  ;; helm-M-x like the good ol' days
-  (spacemacs/set-leader-keys ":"  'helm-M-x)
+  ;; fuzzy find like the good ol' days
+  (spacemacs/set-leader-keys ":" 'helm-M-x)
 
   ;; spell-check
   (spacemacs/set-leader-keys "Sc"  'flyspell-correct-word-generic)
@@ -556,6 +553,7 @@ you should place your code here."
                             (lambda (command)
                               (append '("bundle" "exec") command))))))
 
+  (setq projectile-keymap-prefix (kbd "C-c C-p"))
   ;; dump me into the scratch buffer
   (switch-to-buffer "*scratch*")
 )
@@ -565,16 +563,16 @@ you should place your code here."
   (interactive)
   (progn
     (setq projectile-switch-project-action 'projectile-dired)
-    (helm-projectile-switch-project)
-    (setq projectile-switch-project-action 'helm-projectile)))
+    (projectile-switch-project)
+    (setq projectile-switch-project-action 'projectile-find-file)))
 
 (defun projectile-switch-project-magit ()
   "open projectile-dired with , p G"
   (interactive)
   (progn
     (setq projectile-switch-project-action 'magit-status)
-    (helm-projectile-switch-project)
-    (setq projectile-switch-project-action 'helm-projectile)))
+    (projectile-switch-project)
+    (setq projectile-switch-project-action 'projectile-find-file)))
 
 (defun save-framegeometry ()
   "Gets the current frame's geometry and saves to ~/.emacs.d/private/framegeometry."
