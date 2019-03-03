@@ -1,9 +1,11 @@
 [user]
   name = Chris Becker
   email = cbeck527@gmail.com
+  signingkey = 70FA7961EA5F66A9
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   up = pull --rebase --autostash
+	devin = checkout -b devin-test
 [color]
   diff = auto
 [core]
@@ -39,12 +41,24 @@
 [difftool]
   prompt = false
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
   required = true
+	process = git-lfs filter-process
 [rebase]
   autostash = true
 [magit]
   hideCampaign = true
 [github]
   user = Cbeck527
+  oauth-token = dcf57c008c247ecdacc021e1934ade77e1364f37
+[commit]
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg
+[magithub]
+	online = true
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false

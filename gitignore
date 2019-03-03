@@ -5,6 +5,9 @@ TODOs.org
 .projectile
 .ignore
 
+####### ansible
+.retry
+
 ####### macOS
 # General
 .DS_Store

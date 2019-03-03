@@ -16,9 +16,8 @@ bind x
 bind ^x
 hardstatus on
 hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{c}%H %{= kG}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{= kG}][%{c} %l %{= kG}]'
+hardstatus string '%{= kG}[ %{c}betterbeck %{= kG}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{= kG}][%{c} %l %{= kG}]'
 caption splitonly
 caption string '%{= kG}[ %{= kw}%n %t %{= kG}]'
 windowlist string '%4n %t [%h]%=%f'
-
 bindkey -m ' ' eval 'stuff \040' 'writebuf' 'exec sh -c "/usr/bin/pbcopy < /tmp/screen-exchange"'
