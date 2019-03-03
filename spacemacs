@@ -526,6 +526,7 @@ you should place your code here."
 
   ;; fuzzy find like the good ol' days
   (spacemacs/set-leader-keys ":" 'helm-M-x)
+  (spacemacs/set-leader-keys "," 'helm-M-x)
 
   ;; spell-check
   (spacemacs/set-leader-keys "Sc"  'flyspell-correct-word-generic)

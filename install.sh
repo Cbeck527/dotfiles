@@ -55,7 +55,7 @@ function link() {
 note "Installing dotfiles..."
 for path in * ; do
     case $path in
-        .|..|.git|README.md|extras|virtualenv|install.sh|localrc*|osxrc)
+        .|..|.git|README.md|extras|virtualenv|install.sh|iterm2)
             continue
             ;;
         *)
@@ -63,11 +63,6 @@ for path in * ; do
             ;;
     esac
 done
-
-if [ "$(uname -s)" == "Darwin" ]; then
-  note "Installing macOS specific dotfiles"
-  link "$basedir/osxrc" "$HOME/.osxrc"
-fi
 
 note "Installing vundle and vim plugins"
 if [ ! -d ~/.vim/bundle ]; then
