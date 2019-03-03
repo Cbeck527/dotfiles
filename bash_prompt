@@ -1,0 +1,41 @@
+function venv_prompt() {
+  if ! [[ $VIRTUAL_ENV ]]; then
+    return 1
+  fi
+  printf " %s" "$(basename $VIRTUAL_ENV)"
+}
+
+NONE="\[\e[0m\]"    # unsets color to term's fg color
+BLUE="\[\033[0;34m\]"
+LIGHT_BLUE="\[\033[1;34m\]"
+RED="\[\033[0;31m\]"
+LIGHT_RED="\[\033[1;31m\]"
+GREEN="\[\033[0;32m\]"
+LIGHT_GREEN="\[\033[1;32m\]"
+WHITE="\[\033[1;37m\]"
+LIGHT_GRAY="\[\033[0;37m\]"
+YELLOW="\[\033[0;33m\]"
+TEAL="\[\033[0;36m\]"
+
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+SOLAR_YELLOW=$(tput setaf 136)
+SOLAR_ORANGE=$(tput setaf 166)
+SOLAR_RED=$(tput setaf 124)
+SOLAR_MAGENTA=$(tput setaf 125)
+SOLAR_VIOLET=$(tput setaf 61)
+SOLAR_BLUE=$(tput setaf 33)
+SOLAR_CYAN=$(tput setaf 37)
+SOLAR_GREEN=$(tput setaf 64)
+SOLAR_WHITE=$(tput setaf 254)
+
+HOST_PROMPT=""
+
+export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(vcprompt -f ' [%b${RED}%u%m${BLUE}]')${LIGHT_GRAY} \$ ${NONE}"
+export PS2='> '
+export PS4='+ '
+
+
+# Local Variables:
+# mode: shell-script
+# End:

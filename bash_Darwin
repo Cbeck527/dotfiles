@@ -1,19 +1,17 @@
 # OS X
-alias apcycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
+alias wificycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
 alias dnscache='dscacheutil -flushcache'
 alias e='emacs -nw'
-alias f='fab'
 alias o.="open ."
-alias v='vagrant'
 
 # change my terminal colors
 function solarized {
     if [ "$ITERM_PROFILE" = solarized-dark ]
     then
-        echo -e "\033]50;SetProfile=solarized-light\a"
+        echo -en "\033]50;SetProfile=solarized-light\a"
         export ITERM_PROFILE=solarized-light
     else
-        echo -e "\033]50;SetProfile=solarized-dark\a"
+        echo -en "\033]50;SetProfile=solarized-dark\a"
         export ITERM_PROFILE=solarized-dark
     fi
 }
@@ -22,18 +20,14 @@ function solarized {
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 
-# GOLANG!
-export GOPATH=$HOME/go
-PATH=$PATH:$HOME/go/bin
-
 # homebrew
 export HOMEBREW_NO_ANALYTICS=1
-# bash completion
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-    . /usr/local/share/bash-completion/bash_completion
-fi
 
 # LaTeX
 if [ -d "/Library/TeX/Root/bin/x86_64-darwin/" ]; then
   export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin
 fi
+
+# Local Variables:
+# mode: shell-script
+# End:

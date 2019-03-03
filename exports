@@ -1,0 +1,42 @@
+# general
+export TERM=xterm-256color
+export CLICOLOR=1
+export EDITOR=vim
+export PAGER="less -q"
+
+# Prefer US English and use UTF-8.
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
+
+# Avoid issues with `gpg` as installed via Homebrew.
+# https://stackoverflow.com/a/42265848/96656
+export GPG_TTY=$(tty);
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth';
+
+# Python
+export PYTHONDONTWRITEBYTECODE=1
+
+# FZF (fuzzy finder) if present, and setup commands
+# Auto-completion
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
+# Key bindings
+source "/usr/local/opt/fzf/shell/key-bindings.bash"
+export FZF_DEFAULT_COMMAND='
+    (git ls-tree -r --name-only HEAD ||
+    ag -g "") 2> /dev/null'
+export FZF_DEFAULT_OPTS="
+    --no-height
+    --color fg:-1,bg:-1,hl:136,fg+:254,bg+:-1,hl+:136
+    --color info:136,prompt:136,pointer:230,marker:230,spinner:136
+"
+# Local Variables:
+# mode: shell-script
+# End:

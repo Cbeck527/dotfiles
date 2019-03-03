@@ -51,7 +51,6 @@
   hideCampaign = true
 [github]
   user = Cbeck527
-  oauth-token = dcf57c008c247ecdacc021e1934ade77e1364f37
 [commit]
 	gpgsign = true
 [gpg]
