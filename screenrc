@@ -1,8 +1,10 @@
 startup_message off
-shell -$SHELL
 defscrollback 10000
 vbell off
 altscreen on
+
+shell -$SHELL
+unsetenv PATH
 
 # 1) allow bold colors - necessary for some reason
 # 2) tell screen how to set colors. AB = background, AF=foreground

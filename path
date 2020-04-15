@@ -1,4 +1,9 @@
-export PATH="$PATH:/Users/chris/go/bin:/usr/local/opt/fzf/bin"
+# Add `~/bin` to the `$PATH`
+if [ -d "${HOME}/.bin" ]; then
+    PATH="$HOME/.bin:$PATH";
+fi
+
+export PATH="$PATH:/usr/local/sbin/:/Users/chris/go/bin:/usr/local/opt/fzf/bin"
 
 # Local Variables:
 # mode: shell-script

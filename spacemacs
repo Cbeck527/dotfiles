@@ -30,7 +30,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(php
      rust
      csv
      sql
@@ -39,7 +39,6 @@ This function should only modify configuration layer settings."
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'complete)
      dash
-     deft
      docker
      emacs-lisp
      git
@@ -48,6 +47,7 @@ This function should only modify configuration layer settings."
          go-tab-width 4
          ;; go-use-gometalinter t
          gofmt-command "goimports")
+     gtags
      helm
      html
      ;; ivy
@@ -60,7 +60,15 @@ This function should only modify configuration layer settings."
           org-enable-bootstrap-support t
           org-enable-github-support t
           org-enable-reveal-js-support t
-          org-projectile-file "TODOs.org")
+          org-agenda-files '("~/org")
+          org-src-tab-acts-natively t
+          org-confirm-babel-evaluate nil
+          org-catch-invisible-edits "error"
+          org-archive-location "_archive_org::"
+          org-enforce-todo-dependencies t
+          org-enforce-todo-checkbox-dependencies t
+          org-log-into-drawer t)
+
      osx
      pandoc
      (python :variables
@@ -93,7 +101,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(neotree
+   dotspacemacs-excluded-packages '(evil-escape
+                                    neotree
                                     smartparens
                                     spaceline)
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -535,26 +544,39 @@ you should place your code here."
   (spacemacs/set-leader-keys "gdb" 'magit-diff-buffer-file)
 
   ;; org-mode fun!
-  (setq org-reveal-root "https://cdn.jsdelivr.net/reveal.js/3.6.0/")
-  (setq org-confirm-babel-evaluate nil)
-  (with-eval-after-load 'org
-    (setq org-src-tab-acts-natively t))
-
-  ;; deft-mode setup
-  (setq deft-directory "~/Library/Mobile Documents/com~apple~CloudDocs/notes/")
-  (setq deft-use-filename-as-title t)
+  (with-eval-after-load 'org-projectile
+   (defun org-projectile-get-project-todo-file (project-path)
+    (concat "~/org/" (file-name-nondirectory (directory-file-name project-path)) ".org")))
 
   ;; better(ment) ruby setup
   (spacemacs/set-leader-keys-for-major-mode 'enh-ruby-mode "ru" 'rbenv-use-corresponding)
   (add-hook 'enh-ruby-mode-hook
             (lambda ()
-              (when (file-exists-p (concat (projectile-project-root) "Gemfile"))
-                      (make-variable-buffer-local 'flycheck-command-wrapper-function)
-                      (setq flycheck-command-wrapper-function
-                            (lambda (command)
-                              (append '("bundle" "exec") command))))))
+              (when (file-exists-p (concat (projectile-project-root) "Gemfile.lock"))
+                (shell-command-to-string (concat "grep -o -m1 'rubocop' " (projectile-project-root) "Gemfile.lock"))
+                (make-variable-buffer-local 'flycheck-command-wrapper-function)
+                (setq flycheck-command-wrapper-function
+                      (lambda (command)
+                        (append '("bundle" "exec") command))))))
+
+  ;; better(ment) python setup
+  (add-hook 'python-mode
+            (lambda ()
+              (when (file-exists-p (concat (file-name-directory(buffer-file-name)) ".python-version"))
+                (setq flycheck-python-pycompile-executable "/Users/chris/.pyenv/shims/python"))))
 
   (setq projectile-keymap-prefix (kbd "C-c C-p"))
+
+  (let ((bg (face-attribute 'default :background)))
+    (custom-set-faces
+     `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+     `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+     `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+     `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+     `(company-tooltip-common ((t (:inherit font-lock-constant-face))))))
+
+  (setq exec-path (cons "/Users/chris/.pyenv/shims" exec-path))
+
   ;; dump me into the scratch buffer
   (switch-to-buffer "*scratch*")
 )

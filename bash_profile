@@ -1,8 +1,3 @@
-# Add `~/bin` to the `$PATH`
-if [ -d "${HOME}/.bin" ]; then
-    export PATH="$HOME/.bin:$PATH";
-fi
-
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -16,6 +11,7 @@ shopt -s nocaseglob;
 
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend;
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell;

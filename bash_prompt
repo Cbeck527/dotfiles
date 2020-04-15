@@ -5,6 +5,15 @@ function venv_prompt() {
   printf " %s" "$(basename $VIRTUAL_ENV)"
 }
 
+aws_prompt() {
+    if [ -z ${AWS_PROFILE+x} ];
+    then
+        return 1
+    else
+        printf "%s " "$AWS_PROFILE"
+    fi
+}
+
 NONE="\[\e[0m\]"    # unsets color to term's fg color
 BLUE="\[\033[0;34m\]"
 LIGHT_BLUE="\[\033[1;34m\]"
@@ -31,7 +40,7 @@ SOLAR_WHITE=$(tput setaf 254)
 
 HOST_PROMPT=""
 
-export PS1="${GREEN}\u${HOST_PROMPT} ${LIGHT_GRAY}\W${YELLOW}$(venv_prompt)${BLUE}\$(vcprompt -f ' [%b${RED}%u%m${BLUE}]')${LIGHT_GRAY} \$ ${NONE}"
+export PS1="${GREEN}\u${HOST_PROMPT} ${YELLOW}\$(aws_prompt)${LIGHT_GRAY}\W${BLUE}\$(vcprompt -f ' [%b${RED}%u%m${BLUE}]')${LIGHT_GRAY} \$ ${NONE}"
 export PS2='> '
 export PS4='+ '
 

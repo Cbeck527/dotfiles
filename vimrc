@@ -12,6 +12,7 @@ Plugin 'rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-surround'
+Plugin 'christoomey/vim-tmux-navigator'
 call vundle#end()
 filetype plugin indent on
 

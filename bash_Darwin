@@ -1,3 +1,6 @@
+# Use GNU Awk
+alias awk='gawk'
+
 # OS X
 alias wificycle='networksetup -setairportpower en1 off && networksetup -setairportpower en1 on'
 alias dnscache='dscacheutil -flushcache'
