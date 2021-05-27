@@ -1,0 +1,15 @@
+# Add `~/bin` to the `$PATH`
+if [ -d "${HOME}/.bin" ]; then
+    PATH="$HOME/.bin:$PATH";
+fi
+
+if [ -d "${HOME}/.poetry/bin" ]; then
+    PATH="$HOME/.poetry/bin:$PATH";
+fi
+
+
+export PATH="$PATH:/usr/local/sbin/:/Users/chris/go/bin:/usr/local/opt/fzf/bin:${HOME}/.emacs.d/bin"
+
+# Local Variables:
+# mode: shell-script
+# End:

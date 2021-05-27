@@ -67,7 +67,8 @@ This function should only modify configuration layer settings."
           org-archive-location "_archive_org::"
           org-enforce-todo-dependencies t
           org-enforce-todo-checkbox-dependencies t
-          org-log-into-drawer t)
+          org-log-into-drawer t
+          org-agenda-window-setup "only-window")
 
      osx
      pandoc
@@ -557,7 +558,7 @@ you should place your code here."
                 (make-variable-buffer-local 'flycheck-command-wrapper-function)
                 (setq flycheck-command-wrapper-function
                       (lambda (command)
-                        (append '("bundle" "exec") command))))))
+                        (append '("/Users/chris/.rbenv/shims/bundle" "exec") command))))))
 
   ;; better(ment) python setup
   (add-hook 'python-mode

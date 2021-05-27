@@ -31,6 +31,10 @@ if [ -d "/Library/TeX/Root/bin/x86_64-darwin/" ]; then
   export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin
 fi
 
+# Add tab completion
+# NOTE: this requires the `bash-completion@2` homebrew package
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
 # Local Variables:
 # mode: shell-script
 # End:

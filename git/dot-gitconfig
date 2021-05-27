@@ -1,0 +1,43 @@
+[user]
+  name = Chris Becker
+  email = cbeck527@gmail.com
+  signingkey = 70FA7961EA5F66A9
+[alias]
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  up = pull --rebase --autostash
+[color]
+  diff = auto
+[core]
+  editor = emacsclient
+  excludesfile = /Users/chris/.gitignore
+[pull]
+  rebase = true
+[push]
+  default = simple
+[fetch]
+  prune = true
+[rebase]
+  autostash = true
+[magit]
+  hideCampaign = true
+[github]
+  user = Cbeck527
+[commit]
+  gpgsign = true
+[gpg]
+  program = /usr/local/bin/gpg
+[magithub]
+  online = true
+[magithub "status"]
+  includeStatusHeader = false
+  includePullRequestsSection = false
+  includeIssuesSection = false
+[credential]
+  helper = osxkeychain
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[init]
+	defaultBranch = trunk

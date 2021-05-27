@@ -1,0 +1,10 @@
+qlcolorcode
+qlstephen
+qlmarkdown
+quicklook-json
+qlimagesize
+suspicious-package
+apparency
+quicklookase
+qlvideo
+
