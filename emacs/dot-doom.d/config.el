@@ -1,89 +1,81 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+;;
+;; Global Doom things
+;;
 (setq user-full-name "Chris Becker"
       user-mail-address "chris@becker.am")
-
-(setq doom-font (font-spec :family "Mplus Code" :size 16)
-      doom-variable-pitch-font (font-spec :family "Helvetica" :size 16))
-
-(setq doom-theme 'solarized-dark)
-
-(setq display-line-numbers-type t)
-
 (setq doom-leader-key ","
       doom-localleader-key "-")
-
 (setq auth-sources '("~/.authinfo"))
 
+;; Hide commands in M-x which do not work in the current mode. Vertico commands
+;; are hidden in normal buffers.
+(use-package! emacs
+  :init
+  (setq read-extended-command-predicate
+        #'command-completion-default-include-p))
+
+;;
+;; Theme stuff
+;;
+(setq doom-font (font-spec :family "Mplus Code" :size 16)
+      doom-variable-pitch-font (font-spec :family "Helvetica" :size 16))
 ;; Solarized tweaks: avoid all font-size changes
-;; (setq-default display-line-numbers-width-start t)
+(setq-default display-line-numbers-width-start t)
 (setq solarized-use-variable-pitch nil
       solarized-scale-org-headlines nil)
-(setq solarized-use-less-bold t)
+;; (setq solarized-use-less-bold t)
+(setq doom-theme 'solarized-dark)
+(setq display-line-numbers-type t)
 
-(add-hook! 'after-init-hook 'load-framegeometry)
-(add-hook! 'kill-emacs-hook 'save-framegeometry)
-
-(setq
-  org-src-tab-acts-natively t
-  org-confirm-babel-evaluate nil
-  org-catch-invisible-edits "error"
-  org-archive-location "_archive_org::"
-  org-enforce-todo-dependencies t
-  org-enforce-todo-checkbox-dependencies t
-  org-log-into-drawer t
-  org-hide-emphasis-markers t
-  org-fontify-done-headline t
-  org-fontify-whole-heading-line t
-  org-fontify-quote-and-verse-blocks t
-  org-directory "/Users/chris/Library/Mobile Documents/com~apple~CloudDocs/org/"
-  org-roam-directory org-directory
-  org-default-notes-file "~/inbox.org"
-  org-startup-folded "content")
-
-(after! org-agenda
-  (setq org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator nil
-      org-agenda-compact-blocks t
-      org-agenda-start-day nil ;; i.e. today
-      org-agenda-span 'week
-      org-agenda-start-on-weekday nil
-      org-agenda-window-setup "only-window")
-  (setq org-super-agenda-groups
-      '((:name "Next Items"
-               :time-grid t
-               :tag ("NEXT" "outbox"))
-        (:name "Important"
-               :priority "A")
-        (:name "Quick Picks"
-               :effort< "0:30")
-        (:priority<= "B"
-                     :scheduled future
-                     :order 1)))
-)
-
-
-; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-(setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                 (org-agenda-files :maxlevel . 9))))
-
-; Use full outline paths for refile targets - we file directly with IDO
-(setq org-refile-use-outline-path t)
-
-;;;; Refile settings
-; Exclude DONE state tasks from refile targets
-(defun cb/verify-refile-target ()
+;;
+;; ALL THE ORG THINGS
+;;
+(defun cb/exclude-done-in-refile ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-target-verify-function 'cb/verify-refile-target)
+(after! org
+  (setq org-src-tab-acts-natively t
+        org-confirm-babel-evaluate nil
+        org-catch-invisible-edits "error"
+        org-archive-location "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/archives/%s_archive::"
+        org-enforce-todo-dependencies t
+        org-enforce-todo-checkbox-dependencies t
+        org-todo-keywords '((sequence "TODO" "DOING" "|" "DONE" "DELEGATED" "ABANDONED"))
+        org-log-into-drawer t
+        ; Exclude DONE state tasks from refile targets
+        org-refile-target-verify-function 'cb/exclude-done-in-refile
+        org-hide-emphasis-markers t
+        org-fontify-done-headline t
+        org-fontify-whole-heading-line t
+        org-fontify-quote-and-verse-blocks t
+        org-directory "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/"
+        org-default-notes-file "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/Inbox.org"
+        org-link-elisp-confirm-function nil
+        ;; org refiling tweaks - targets include this file and any file contributing to
+        ;; the agenda - up to 9 levels deep
+        org-refile-targets (quote ((nil :maxlevel . 9)
+                                   (org-agenda-files :maxlevel . 9)))
+        ;; Use full outline paths for refile targets - we file directly with IDO
+        org-refile-use-outline-path 'file
+        org-startup-folded "content"))
 
-;; open org-agenda with a better keymap
-(map! :leader
-      "o a" 'org-agenda-list)
+(after! org-agenda
+  (setq org-agenda-files (list "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/journals/"
+                               "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/")
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator nil
+        org-agenda-compact-blocks t
+        org-agenda-start-day nil ;; i.e. today
+        org-agenda-span 'week
+        org-agenda-start-on-weekday nil
+        org-agenda-window-setup "only-window"))
 
+;; keymaps
 (map! :after evil-org-agenda
       :map evil-org-agenda-mode-map
       ;; view modes
@@ -96,34 +88,91 @@
       :m "f" 'org-agenda-later
       :m "b" 'org-agenda-earlier)
 
+;; ;;
+;; ;; org-projectile
+;; ;;
+(after! projectile
+  ;; TODO investigate this
+  ;; https://docs.projectile.mx/projectile/configuration.html#projectile-dired
+  ;; (setq projectile-switch-project-action #'projectile-find-file
+  ;;       projectile-find-dir-includes-top-level t)
+  (org-projectile-per-project))
+(after! org-projectile
+  (push (org-projectile-project-todo-entry) org-capture-templates)
+  (setq org-projectile-projects-directory "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/"
+        org-projectile-allow-tramp-projects nil
+        org-link-elisp-confirm-function nil
+        org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
+  (add-to-list 'org-capture-templates
+               (org-projectile-project-todo-entry
+               :capture-character "l"
+               :capture-heading "Project TODO"))
+  (defun org-projectile-get-project-todo-file (project-path)
+    (concat "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/" (projectile-project-name) ".org")))
 
-(defun org-projectile-get-project-todo-file (project-path)
-  (concat "~/org/" (file-name-nondirectory (directory-file-name project-path)) ".org"))
+(defun cb/org-todos-for-current-project ()
+  "Open org-todo-list for the current project"
+  (interactive)
+  (let* ((org-agenda-tag-filter-preset (list (concat "+" projectile-project-name))))
+    (org-todo-list)))
+(map! :leader :desc "Open project TODOs" "p t" #'cb/org-todos-for-current-project)
 
-;; open projectile-dired with , p P
-;; open magit-status on project with , p G
-(map! :leader
-      "p P" 'projectile-switch-project-dired
-      "p G"'projectile-switch-project-magit)
+(defun cb/open-org-file-for-project-other-window ()
+  "Open the project's org file in another window"
+  (interactive)
+  (find-file-other-window (concat "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/" (projectile-project-name) ".org")))
+(map! :leader :desc "Project's org file other window" "p o" #'cb/open-org-file-for-project-other-window)
+
+(defun cb/open-org-file-for-project ()
+  "Open the project's org file"
+  (interactive)
+  (find-file (concat "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/" (projectile-project-name) ".org")))
+(map! :leader :desc "Open project's org file" "p O" #'cb/open-org-file-for-project)
+;; ;;
+;; ;; org-roam v2
+;; ;;
+;; (after! org-roam
+;;   (setq org-roam-directory "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB"
+;;         org-roam-dailies-directory "journals/"
+;;         org-roam-capture-templates
+;;          '(("d" "default" plain
+;;             "%?" :target
+;;             (file+head "pages/${slug}.org" "#+title: ${title}\n")
+;;             :unnarrowed t))))
+;;
+;; org keymaps
+;;
+;; ;; open org-agenda with a better keymap
+;; (map! :leader
+;;       "o a" 'org-agenda-list)
 
 ;;
-;; custom functions!
+;; Org capture
 ;;
-(defun projectile-switch-project-dired ()
-  "open projectile-dired with , p P"
-  (interactive)
-  (progn
-    (setq projectile-switch-project-action 'projectile-dired)
-    (projectile-switch-project)
-    (setq projectile-switch-project-action 'projectile-find-file)))
+;; (setq +org-capture-frame-parameters
+;;   `((name . "Org Capture")
+;;     (left . (+ 550))
+;;     (top . (+ 400))
+;;     (width . 110)
+;;     (height . 12)
+;;     (transient . t)
+;;     ,(when (and IS-LINUX (not (getenv "DISPLAY")))
+;;        `(display . ":0"))
+;;     ,(if IS-MAC '(menu-bar-lines . 1))))
 
-(defun projectile-switch-project-magit ()
-  "open projectile-dired with , p G"
-  (interactive)
-  (progn
-    (setq projectile-switch-project-action 'magit-status)
-    (projectile-switch-project)
-    (setq projectile-switch-project-action 'projectile-find-file)))
+;; (defun my-org-capture-cleanup ()
+;;   "Clean up the frame created while capturing via org-protocol."
+;;   (-when-let ((&alist 'name name) (frame-parameters))
+;;     (when (equal name "global-org-capture")
+;;       (delete-frame))))
+
+;; (add-hook! 'org-capture-after-finalize-hook 'my-org-capture-cleanup)
+
+;;
+;; Save my window size pls
+;;
+(add-hook! 'after-init-hook 'load-framegeometry)
+(add-hook! 'kill-emacs-hook 'save-framegeometry)
 
 (defun save-framegeometry ()
   "Get the current frame's geometry and saves to ~/.emacs.d/.local/framegeometry."
@@ -165,22 +214,3 @@ geometry."
     (when (file-readable-p framegeometry-file)
       (load-file framegeometry-file)))
   )
-
-(setq +org-capture-frame-parameters
-  `((name . "Org Capture")
-    (left . (+ 550))
-    (top . (+ 400))
-    (width . 110)
-    (height . 12)
-    (transient . t)
-    ,(when (and IS-LINUX (not (getenv "DISPLAY")))
-       `(display . ":0"))
-    ,(if IS-MAC '(menu-bar-lines . 1))))
-
-(defun my-org-capture-cleanup ()
-  "Clean up the frame created while capturing via org-protocol."
-  (-when-let ((&alist 'name name) (frame-parameters))
-    (when (equal name "global-org-capture")
-      (delete-frame))))
-
-(add-hook! 'org-capture-after-finalize-hook 'my-org-capture-cleanup)

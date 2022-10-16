@@ -25,11 +25,9 @@ export CPPFLAGS=-Qunused-arguments
 
 # homebrew
 export HOMEBREW_NO_ANALYTICS=1
-
-# LaTeX
-if [ -d "/Library/TeX/Root/bin/x86_64-darwin/" ]; then
-  export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin
-fi
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
 
 # Add tab completion
 # NOTE: this requires the `bash-completion@2` homebrew package

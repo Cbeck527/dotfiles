@@ -1,14 +1,56 @@
+function add_to_path {
+  case ":$PATH:" in
+    *":$1:"*) :;;        # already there
+    *) PATH="$1:$PATH";;
+  esac
+}
+
+# Sane Defaults
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+MANPATH="/usr/share/man:/usr/local/share/man"
+
+# Inject homebrew stuff as early as possible
+if [ -d "/opt/homebrew/" ]; then
+  PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+  MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+  INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+fi
+
+# Add homebrew coreutils package to the `$PATH`
+if [ -d "/opt/homebrew/opt/grep/libexec/gnubin" ]; then
+    add_to_path /opt/homebrew/opt/grep/libexec/gnubin
+fi
+
 # Add `~/bin` to the `$PATH`
 if [ -d "${HOME}/.bin" ]; then
-    PATH="$HOME/.bin:$PATH";
+    add_to_path $HOME/.bin
 fi
 
 if [ -d "${HOME}/.poetry/bin" ]; then
-    PATH="$HOME/.poetry/bin:$PATH";
+    add_to_path $HOME/.poetry/bin
+fi
+
+# LaTeX for macOS
+if test -d "/Library/TeX/Root/bin/x86_64-darwin/"; then
+  add_to_path /Library/TeX/Root/bin/x86_64-darwin
+fi
+
+# postgres@11 from homebrew
+if test -d '/usr/local/opt/postgresql@11/bin'; then
+  add_to_path /usr/local/opt/postgresql@11/bin
+fi
+
+# Rust
+if test -d "${HOME}/.cargo"; then
+    add_to_path ${HOME}/.cargo/bin
 fi
 
 
-export PATH="$PATH:/usr/local/sbin/:/Users/chris/go/bin:/usr/local/opt/fzf/bin:${HOME}/.emacs.d/bin"
+add_to_path "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/bin"
+
+export PATH="$PATH"
+export MANPATH="$MANPATH"
+export INFOPATH="$INFOPATH"
 
 # Local Variables:
 # mode: shell-script

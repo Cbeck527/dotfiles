@@ -25,7 +25,7 @@
 [commit]
   gpgsign = true
 [gpg]
-  program = /usr/local/bin/gpg
+  program = /opt/homebrew/bin/gpg
 [magithub]
   online = true
 [magithub "status"]
@@ -41,3 +41,9 @@
 	process = git-lfs filter-process
 [init]
 	defaultBranch = trunk
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
