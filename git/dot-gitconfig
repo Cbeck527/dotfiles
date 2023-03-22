@@ -1,14 +1,15 @@
 [user]
   name = Chris Becker
-  email = cbeck527@gmail.com
+  email = chris@becker.am
   signingkey = 70FA7961EA5F66A9
 [alias]
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   up = pull --rebase --autostash
 [color]
   diff = auto
+  colorMoved = default
 [core]
   editor = emacsclient
+  pager = delta
   excludesfile = /Users/chris/.gitignore
 [pull]
   rebase = true
@@ -47,3 +48,9 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+  navigate = true
+[merge]
+  conflictstyle = diff3

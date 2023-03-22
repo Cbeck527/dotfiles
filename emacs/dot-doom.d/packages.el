@@ -4,3 +4,4 @@
 (package! solarized-theme)
 (package! org-projectile)
 (disable-packages! diredfl)
+(unpin! straight)

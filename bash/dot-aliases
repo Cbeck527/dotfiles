@@ -3,22 +3,24 @@ alias reloadprofile='. ~/.bash_profile'
 alias incognito='unset HISTFILE'
 
 # git
-export GIT_MERGE_AUTOEDIT=0
 alias ga='git add'
 alias gc='git commit'
 alias gd='git diff'
 alias gs='git status'
 alias gcd='cd $(git rev-parse --show-toplevel)'
 
-# coreutils colors
+# bat
+alias cat='bat --paging=never'
+
+# grep colors
 alias grep="grep --color=auto"
-if ls --color &> /dev/null;
-then
+
+if hash exa 2>/dev/null; then
+    alias ls='exa -lF --group-directories-first'
+    alias lsa='exa -lF --all --all --group-directories-first'
+else
     alias ls='ls -lhF --color'
     alias lsa='ls -lahF --color'
-else
-    alias ls='ls -lhF'
-    alias lsa='ls -lahF'
 fi
 
 # Local Variables:

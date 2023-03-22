@@ -1,0 +1,5 @@
+--theme="Solarized (dark)"
+--style="plain"
+
+# Use italic text on the terminal (not supported on all terminals)
+--italic-text=never

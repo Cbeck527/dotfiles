@@ -3,7 +3,7 @@
 (doom! :input
 
        :completion
-       company
+       (company +childframe)
        (vertico +icons)
 
        :ui
@@ -36,13 +36,15 @@
 
        :checkers
        syntax
-       (spell +flyspell)
+       (spell +aspell)
        grammar
 
        :tools
        ansible
-       debugger
-       docker
+       (debugger +lsp)
+       direnv
+       (docker +lsp)
+       editorconfig
        (eval +overlay)
        gist
        lookup
@@ -52,34 +54,39 @@
        pdf
        taskrunner
        terraform
+       tree-sitter
+       tmux
 
        :os
        (:if IS-MAC macos)
 
        :lang
-       (cc +lsp)
+       (cc +lsp +tree-sitter)
        (clojure +lsp)
        data
-       elixir
+       (elixir +lsp +tree-sitter)
+       (erlang +lsp)
        emacs-lisp
-       (go +lsp)
-       json
-       javascript
-       julia
-       latex
-       lua
-       markdown
+       (go +lsp +tree-sitter)
+       (graphql +lsp)
+       (json +lsp +tree-sitter)
+       (javascript +lsp +tree-sitter)
+       (julia +lsp +tree-sitter)
+       (latex +lsp)
+       (lua +lsp)
+       (markdown +grip)
+       (nix +tree-sitter)
        (org +dragndrop +hugo +pandoc +present +pretty +roam2)
-       (php +lsp)
-       (python +lsp +pyenv)
-       rest
+       (php +lsp +tree-sitter)
+       (python +lsp +pyenv +tree-sitter)
+       (rest +jq)
        rst
-       (ruby +rails +rbenv +lsp)
+       (ruby +rails +rbenv +lsp +tree-sitter)
        (rust +lsp)
-       (sh +lsp)
-       swift
-       (web +lsp)
-       yaml
+       (sh +lsp +tree-sitter)
+       (swift +lsp +tree-sitter)
+       (web +lsp +tree-sitter)
+       (yaml +lsp)
 
        :config
        (default +bindings +smartparens))

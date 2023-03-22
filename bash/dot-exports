@@ -1,4 +1,6 @@
 # general
+export TERMINFO_DIRS="$TERMINFO_DIRS:$HOME/.local/share/terminfo"
+
 # export TERM=xterm-256color
 export CLICOLOR=1
 export EDITOR=vim
@@ -29,9 +31,9 @@ export PYTHONDONTWRITEBYTECODE=1
 
 # FZF (fuzzy finder) if present, and setup commands
 # Auto-completion
-[[ $- == *i* ]] && source "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/shell/completion.bash" 2> /dev/null
+# [[ $- == *i* ]] && source "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/shell/completion.bash" 2> /dev/null
 # Key bindings
-source "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/shell/key-bindings.bash"
+# source "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/shell/key-bindings.bash"
 export FZF_DEFAULT_COMMAND='
     (git ls-tree -r --name-only HEAD ||
     ag -g "") 2> /dev/null'
@@ -44,6 +46,18 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 
 # Good tagging
 export GTAGSLABEL=pygments
+
+# Better k9s
+export K9SCONFIG="${HOME}/.k9s"
+
+# git
+export GIT_MERGE_AUTOEDIT=0
+
+# bat
+export BAT_CONFIG_PATH="${HOME}/.bat"
+
+# atuin
+export ATUIN_CONFIG_DIR="${HOME}/.atuin"
 
 # Local Variables:
 # mode: shell-script

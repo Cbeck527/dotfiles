@@ -1,0 +1,3 @@
+dialect = "us"
+style = "compact"
+update_check = false

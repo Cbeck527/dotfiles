@@ -169,6 +169,12 @@
 ;; (add-hook! 'org-capture-after-finalize-hook 'my-org-capture-cleanup)
 
 ;;
+;; Don't spell check everywhere, just where I want.
+;;
+(remove-hook 'text-mode-hook #'spell-fu-mode)
+(add-hook 'markdown-mode-hook #'spell-fu-mode)
+
+;;
 ;; Save my window size pls
 ;;
 (add-hook! 'after-init-hook 'load-framegeometry)
