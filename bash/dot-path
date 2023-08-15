@@ -14,6 +14,8 @@ if [ -d "/opt/homebrew/" ]; then
   PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
   MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
   INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+  export BREW_PREFIX="/opt/homebrew"
+  export BREW="/opt/homebrew/bin/brew"
 fi
 
 # Add homebrew coreutils package to the `$PATH`
@@ -25,6 +27,17 @@ fi
 if [ -d "${HOME}/.bin" ]; then
     add_to_path $HOME/.bin
 fi
+
+# Emacs and Doom
+if [ -d "${HOME}/.emacs.d/bin" ]; then
+    add_to_path $HOME/.emacs.d/bin
+fi
+if [ -d "/opt/homebrew/Cellar/emacs-plus@29/29.1/bin" ]; then
+    add_to_path /opt/homebrew/Cellar/emacs-plus@29/29.1/bin
+fi
+# if [ -d "/opt/homebrew/Cellar/emacs-mac/emacs-28.2-mac-9.1/bin" ]; then
+#     add_to_path /opt/homebrew/Cellar/emacs-mac/emacs-28.2-mac-9.1/bin
+# fi
 
 if [ -d "${HOME}/.poetry/bin" ]; then
     add_to_path $HOME/.poetry/bin
@@ -40,6 +53,11 @@ if test -d '/usr/local/opt/postgresql@11/bin'; then
   add_to_path /usr/local/opt/postgresql@11/bin
 fi
 
+# Go
+if test -d "${HOME}/go/bin"; then
+    add_to_path ${HOME}/go/bin
+fi
+
 # Rust
 if test -d "${HOME}/.cargo"; then
     add_to_path ${HOME}/.cargo/bin
@@ -51,7 +69,9 @@ if test -d '/opt/homebrew/opt/ncurses/bin/'; then
   add_to_path /opt/homebrew/opt/ncurses/bin
 fi
 
-add_to_path "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/bin"
+if test -d "$BREW_PREFIX/opt/fzf/bin"; then
+   add_to_path "$BREW_PREFIX/opt/fzf/bin"
+fi
 
 export PATH="$PATH"
 export MANPATH="$MANPATH"

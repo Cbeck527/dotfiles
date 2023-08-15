@@ -12,9 +12,13 @@
 ;; Hide commands in M-x which do not work in the current mode. Vertico commands
 ;; are hidden in normal buffers.
 (use-package! emacs
-  :init
-  (setq read-extended-command-predicate
-        #'command-completion-default-include-p))
+  :init (setq read-extended-command-predicate #'command-completion-default-include-p))
+
+;; Use delta with magit diffs
+(use-package! magit-delta
+  :hook (magit-mode . magit-delta-mode )
+  :config (setq! magit-delta-default-dark-theme "Solarized (dark)"
+                 magit-delta-delta-args '("--24-bit-color" "always" "--features" "magit" "--color-only")))
 
 ;;
 ;; Theme stuff
@@ -25,9 +29,26 @@
 (setq-default display-line-numbers-width-start t)
 (setq solarized-use-variable-pitch nil
       solarized-scale-org-headlines nil)
-;; (setq solarized-use-less-bold t)
+(setq solarized-use-less-bold t)
 (setq doom-theme 'solarized-dark)
 (setq display-line-numbers-type t)
+(setq solarized-distinct-fringe-background t)
+(after! company
+  (set-face-attribute 'company-tooltip-selection nil :background "#00464a"))
+
+;;
+;; projectile
+;;
+(setq +workspaces-switch-project-function #'dired)
+(map! :leader :desc "Open dired at PROJECT ROOT" "p d" #'projectile-dired)
+(map! :leader :desc "Remove known project" "p D" #'projectile-remove-known-project)
+
+;;
+;; lsp error workaround
+;; https://github.com/doomemacs/doomemacs/issues/6211
+;;
+(after! lsp-ui
+  (setq lsp-ui-sideline-enable nil))
 
 ;;
 ;; ALL THE ORG THINGS
@@ -92,10 +113,6 @@
 ;; ;; org-projectile
 ;; ;;
 (after! projectile
-  ;; TODO investigate this
-  ;; https://docs.projectile.mx/projectile/configuration.html#projectile-dired
-  ;; (setq projectile-switch-project-action #'projectile-find-file
-  ;;       projectile-find-dir-includes-top-level t)
   (org-projectile-per-project))
 (after! org-projectile
   (push (org-projectile-project-todo-entry) org-capture-templates)
@@ -128,18 +145,19 @@
   (interactive)
   (find-file (concat "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB/pages/" (projectile-project-name) ".org")))
 (map! :leader :desc "Open project's org file" "p O" #'cb/open-org-file-for-project)
-;; ;;
-;; ;; org-roam v2
-;; ;;
-;; (after! org-roam
-;;   (setq org-roam-directory "/Users/chris/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/CMB"
-;;         org-roam-dailies-directory "journals/"
-;;         org-roam-capture-templates
-;;          '(("d" "default" plain
-;;             "%?" :target
-;;             (file+head "pages/${slug}.org" "#+title: ${title}\n")
-;;             :unnarrowed t))))
 ;;
+;; org-roam v2
+;;
+(use-package! org-roam
+  :custom
+  (org-roam-directory "/Users/chris/notes")
+  (org-roam-dailies-directory "journals/")
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?" :target
+      (file+head "pages/${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t))))
+
 ;; org keymaps
 ;;
 ;; ;; open org-agenda with a better keymap
@@ -173,6 +191,10 @@
 ;;
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 (add-hook 'markdown-mode-hook #'spell-fu-mode)
+
+;; Auto-format code in certain modes
+(add-hook! 'go-mode-hook #'format-all-mode)
+(setq-hook! 'python-mode-hook +format-with 'black)
 
 ;;
 ;; Save my window size pls
@@ -220,3 +242,11 @@ geometry."
     (when (file-readable-p framegeometry-file)
       (load-file framegeometry-file)))
   )
+;; https://www.blogbyben.com/2022/05/gotcha-emacs-on-mac-os-too-many-files.html
+(defun file-notify-rm-all-watches ()
+  "Remove all existing file notification watches from Emacs."
+  (interactive)
+  (maphash
+   (lambda (key _value)
+     (file-notify-rm-watch key))
+   file-notify-descriptors))

@@ -10,6 +10,7 @@ awscli
 bartender
 bash
 bash-completion@2
+bat
 cdk8s
 choosy
 circleci
@@ -22,6 +23,7 @@ cyberduck
 discord
 docker-credential-helper-ecr
 eksctl
+exa
 exiftool
 fantastical
 fd
@@ -34,6 +36,7 @@ fzf
 gawk
 gh
 git
+git-delta
 git-lfs
 gnu-sed
 gnupg
@@ -87,6 +90,7 @@ tig
 tmux
 tree
 urlview
+vcprompt
 vim
 watch
 websocat
@@ -94,3 +98,8 @@ wget
 wireguard-go
 wireguard-tools
 yq
+docker
+docker-buildx
+docker-compose
+gomplate
+keka

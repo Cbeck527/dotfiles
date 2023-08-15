@@ -12,10 +12,19 @@ man() {
         man "$@"
 }
 
+# tmux shortcuts
+function tinit {
+    tmux rename-window "$(basename "${PWD}")"
+}
+
+function tclear {
+    tmux setw automatic-rename
+}
+
 # marks
 export MARKPATH=$HOME/.marks
 function jump {
-    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
+    cd -P "$MARKPATH/$1" 2>/dev/null && tinit || echo "No such mark: $1"
 }
 function mark {
     mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"

@@ -83,7 +83,7 @@ selection:
 live_config_reload: true
 
 key_bindings:
-  - { key: N,         mods: Command,      action: CreateNewWindow        }
+  # - { key: N,         mods: Command,      action: CreateNewWindow        }
   - { key: Left,     mods: Alt,     chars: "\x1bb"                       } # one word left
   - { key: Right,    mods: Alt,     chars: "\x1bf"                       } # one word right
 

@@ -31,9 +31,11 @@ if type aws > /dev/null 2>&1; then
     complete -C aws_completer aws
 fi
 
-# bash-preexec and atuin
-[[ -f "${HOME}/.bash-preexec.sh" ]] && source "${HOME}/.bash-preexec.sh"
-eval "$(atuin init bash --disable-up-arrow)"
+# fzf setup
+[[ -f "${HOME}/.fzf.bash" ]] && source "${HOME}/.fzf.bash"
+
+# direnv
+eval "$(direnv hook bash)"
 
 # Local Variables:
 # mode: shell-script

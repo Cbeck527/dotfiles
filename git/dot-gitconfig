@@ -4,13 +4,13 @@
   signingkey = 70FA7961EA5F66A9
 [alias]
   up = pull --rebase --autostash
-[color]
-  diff = auto
-  colorMoved = default
+  rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
 [core]
-  editor = emacsclient
   pager = delta
+  editor = emacsclient
   excludesfile = /Users/chris/.gitignore
+[interactive]
+  diffFilter = delta --color-only
 [pull]
   rebase = true
 [push]
@@ -19,38 +19,56 @@
   prune = true
 [rebase]
   autostash = true
-[magit]
-  hideCampaign = true
-[github]
-  user = Cbeck527
+[merge]
+  conflictstyle = diff3
 [commit]
   gpgsign = true
+[diff]
+  colorMoved = default
 [gpg]
   program = /opt/homebrew/bin/gpg
-[magithub]
-  online = true
-[magithub "status"]
-  includeStatusHeader = false
-  includePullRequestsSection = false
-  includeIssuesSection = false
 [credential]
   helper = osxkeychain
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
 [init]
-	defaultBranch = trunk
-[credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
-[interactive]
-    diffFilter = delta --color-only
+  defaultBranch = trunk
+
 [delta]
   navigate = true
-[merge]
-  conflictstyle = diff3
+  syntax-theme = Solarized (dark)
+  features = pretty
+[delta "pretty"]
+  line-numbers = true
+  map-styles = "bold purple => syntax #2e1533, bold cyan => syntax #1d473f"
+  commit-style = raw
+  file-style = white auto
+  file-decoration-style = black bold ul
+  file-modified-label = "changed: "
+  hunk-header-style = raw
+  hunk-header-decoration-style = ""
+  line-numbers-left-style = black bold
+  line-numbers-right-style = black bold
+  line-numbers-zero-style = "#869496"
+  # width = variable
+[delta "magit"]
+  line-numbers = false
+  keep-plus-minus-markers = true
+[github]
+  user = Cbeck527
+[credential "https://github.com"]
+  helper =
+  helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+  helper =
+  helper = !/opt/homebrew/bin/gh auth git-credential
+
+[url "git@github.com:HealthByRo/"]
+	insteadOf = https://github.com/healthbyro/
+
+# Local Variables:
+# mode: conf-unix
+# End:

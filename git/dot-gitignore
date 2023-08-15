@@ -1,9 +1,12 @@
 .ropeproject
 .vagrant*
 .fab_tasks~
+.ignore
+
+####### Emacs
 TODOs.org
 .projectile
-.ignore
+.dir-locals.el
 
 ####### ansible
 .retry

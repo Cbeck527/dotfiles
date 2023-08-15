@@ -28,12 +28,9 @@ export HISTTIMEFORMAT="[%F %T] "
 
 # Python
 export PYTHONDONTWRITEBYTECODE=1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# FZF (fuzzy finder) if present, and setup commands
-# Auto-completion
-# [[ $- == *i* ]] && source "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/shell/completion.bash" 2> /dev/null
-# Key bindings
-# source "$(/opt/homebrew/bin/brew --prefix)/opt/fzf/shell/key-bindings.bash"
+# FZF (fuzzy finder)
 export FZF_DEFAULT_COMMAND='
     (git ls-tree -r --name-only HEAD ||
     ag -g "") 2> /dev/null'

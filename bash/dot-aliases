@@ -23,6 +23,10 @@ else
     alias lsa='ls -lahF --color'
 fi
 
+# k8s
+alias k='kubectl'
+complete -F __start_kubectl k
+
 # Local Variables:
 # mode: shell-script
 # End:

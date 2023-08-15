@@ -35,7 +35,7 @@
        vc
 
        :checkers
-       syntax
+       (syntax +childframe)
        (spell +aspell)
        grammar
 
@@ -70,6 +70,7 @@
        (go +lsp +tree-sitter)
        (graphql +lsp)
        (json +lsp +tree-sitter)
+       (java +lsp +tree-sitter)
        (javascript +lsp +tree-sitter)
        (julia +lsp +tree-sitter)
        (latex +lsp)
@@ -78,7 +79,7 @@
        (nix +tree-sitter)
        (org +dragndrop +hugo +pandoc +present +pretty +roam2)
        (php +lsp +tree-sitter)
-       (python +lsp +pyenv +tree-sitter)
+       (python +lsp +pyenv +pyright +tree-sitter)
        (rest +jq)
        rst
        (ruby +rails +rbenv +lsp +tree-sitter)
