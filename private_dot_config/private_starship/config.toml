@@ -1,0 +1,182 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+command_timeout = 2_000 # miliseconds
+
+format = "$username$directory$direnv$python$git_branch$git_status${env_var.RODEO_ENV}${env_var.ENV}${env_var.INCOGNITO_MODE}$character"
+
+right_format = "$status$cmd_duration"
+
+[env_var.INCOGNITO_MODE]
+format = '[\(incognito\)](purple) '
+
+[env_var.ENV]
+format = '[\[env: $env_value\]](red) '
+
+[env_var.RODEO_ENV]
+format = '[\[rodeo: $env_value\]](yellow) '
+
+[username]
+show_always = true
+format = '[$user](green) '
+aliases = { "christopher.becker" = "chris" }
+
+[directory]
+repo_root_format = '[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+repo_root_style = 'white'
+style = 'white'
+read_only = '[RO]'
+fish_style_pwd_dir_length = 1
+
+[aws]
+disabled = true
+format = '[\[aws:($profile )(\($region\))\]]($style) '
+style = 'bold yellow'
+
+[direnv]
+disabled = false
+format = '[\[+direnv\]](cyan) '
+
+[python]
+format = '[\[($virtualenv )(${version})\]](purple) '
+detect_files = []
+detect_extensions = []
+
+# git
+[git_branch]
+format = '[\[$branch](blue)'
+[git_commit]
+disabled = true
+[git_status]
+format = '($untracked$modified)[\]](blue) '
+untracked = '[?](red)'
+modified = '[+](red)'
+
+[cmd_duration]
+min_time = 5_000
+format = '[took $duration](bold yellow) '
+
+[status]
+disabled = false
+format = '[\[exit: $status\]](red) '
+
+[character]
+format = '[\$ ](white)'
+
+[time]
+format = '[($status_code$cmd_duration) at $time](yellow)'
+use_12hr = true
+disabled = false
+
+# Disabled for now
+# [shlvl]
+# disabled = false
+# format = '[$symbol$shlvl]($style)'
+# repeat = true
+# symbol = '❯'
+# repeat_offset = 1
+# threshold = 0
+
+# DISABLED MODULES
+[azure]
+disabled = true
+[bun]
+disabled = true
+[c]
+disabled = true
+[cobol]
+disabled = true
+[conda]
+disabled = true
+[crystal]
+disabled = true
+[cmake]
+disabled = true
+[daml]
+disabled = true
+[dart]
+disabled = true
+[deno]
+disabled = true
+[dotnet]
+disabled = true
+[docker_context]
+disabled = true
+[elixir]
+disabled = true
+[elm]
+disabled = true
+[fennel]
+disabled = true
+[fossil_branch]
+disabled = true
+[gcloud]
+disabled = true
+[gleam]
+disabled = true
+[golang]
+disabled = true
+[gradle]
+disabled = true
+[guix_shell]
+disabled = true
+[hg_branch]
+disabled = true
+[java]
+disabled = true
+[julia]
+disabled = true
+[kotlin]
+disabled = true
+[lua]
+disabled = true
+[nodejs]
+disabled = true
+[memory_usage]
+disabled = true
+[meson]
+disabled = true
+[nats]
+disabled = true
+[nim]
+disabled = true
+[nix_shell]
+disabled = true
+[ocaml]
+disabled = true
+[opa]
+disabled = true
+[package]
+disabled = true
+[perl]
+disabled = true
+[php]
+disabled = true
+[pijul_channel]
+disabled = true
+[pulumi]
+disabled = true
+[purescript]
+disabled = true
+[quarto]
+disabled = true
+[raku]
+disabled = true
+[ruby]
+disabled = true
+[rust]
+disabled = true
+[scala]
+disabled = true
+[spack]
+disabled = true
+[solidity]
+disabled = true
+[swift]
+disabled = true
+[typst]
+disabled = true
+[terraform]
+disabled = true
+[zig]
+disabled = true

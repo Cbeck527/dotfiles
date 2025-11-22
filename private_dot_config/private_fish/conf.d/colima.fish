@@ -1,0 +1,1 @@
+set -gx COLIMA_HOME $XDG_CONFIG_HOME/colima

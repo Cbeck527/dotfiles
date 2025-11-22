@@ -1,0 +1,25 @@
+# Example: Bastion/Jump host configuration
+# Host bastion
+#     HostName bastion.example.com
+#     User username
+#     IdentityFile ~/.ssh/bastion_key
+#     ForwardAgent yes  # Only for bastion hosts
+#
+# Host internal-*.example.com
+#     ProxyJump bastion
+#     User username
+#     IdentityFile ~/.ssh/internal_key
+
+# Example: Development servers with relaxed settings
+# Host dev-*.local
+#     StrictHostKeyChecking no
+#     UserKnownHostsFile /dev/null
+#     LogLevel ERROR
+
+# Example: Slow connection optimization
+# Host slowconnection
+#     HostName example.com
+#     Compression yes
+#     CompressionLevel 9
+#     Ciphers aes128-ctr
+#     MACs umac-64@openssh.com

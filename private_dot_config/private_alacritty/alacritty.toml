@@ -1,0 +1,50 @@
+
+[general]
+import = [
+  "~/.config/alacritty/themes/solarized-dark.toml",
+]
+live_config_reload = true
+
+[terminal.shell]
+program = "/run/current-system/sw/bin/fish"
+
+[cursor]
+unfocused_hollow = true
+
+[cursor.style]
+blinking = "Off"
+shape = "Block"
+
+[env]
+TERM = "alacritty-direct"
+
+[font]
+size = 17.0
+
+[font.bold]
+family = "TX-02"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.normal]
+family = "TX-02"
+
+[font.offset]
+x = 0
+y = 0
+
+[selection]
+save_to_clipboard = false
+
+[window]
+dynamic_padding = true
+dynamic_title = true
+option_as_alt = "Both"
+startup_mode = "Maximized"
+
+[window.padding]
+x = 6
+y = 0

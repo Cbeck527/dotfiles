@@ -1,0 +1,2 @@
+# This directory is used for SSH connection multiplexing
+# It stores control sockets for reusing SSH connections

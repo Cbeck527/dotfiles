@@ -1,0 +1,123 @@
+plugins:
+  stern_logs:
+    shortCut: Ctrl-L
+    confirm: false
+    description: "Stern Logs"
+    scopes:
+      - pods
+      - replicationcontrollers
+      - services
+      - daemonsets
+      - deployment
+      - replicaset
+      - statefulset
+      - job
+    command: sh
+    background: false
+    args:
+      - -ic
+      - |
+        stern --kubeconfig=$KUBECONFIG --color always --tail 50 -n $NAMESPACE $RESOURCE_NAME/$NAME
+        exit 0
+  stern_logs_pretty:
+    shortCut: Shift-L
+    confirm: false
+    description: "Stern JSON Logs"
+    scopes:
+      - pods
+      - replicationcontrollers
+      - services
+      - daemonsets
+      - deployments
+      - replicasets
+      - statefulsets
+      - jobs
+    command: sh
+    background: false
+    args:
+      - -ic
+      - |
+        stern --kubeconfig=$KUBECONFIG --color always --tail 50 -n $NAMESPACE --template='{{colorGreen .PodName}}/{{ colorCyan .ContainerName}}{{"\n"}} {{ with $msg := .Message | tryParseJSON }}{{ prettyJSON $msg }}{{ else }} {{ .Message }} {{ end }}{{"\n"}}' $RESOURCE_NAME/$NAME
+        exit 0
+  stern_container_logs:
+    shortCut: Ctrl-L
+    confirm: false
+    description: "Stern Logs"
+    scopes:
+      - containers
+    command: sh
+    background: false
+    args:
+      - -ic
+      - |
+        stern --kubeconfig=$KUBECONFIG --color always --tail 10 -n $NAMESPACE $POD --container ^$NAME\$
+        exit 0
+  stern_container_logs_pretty:
+    shortCut: Shift-L
+    confirm: false
+    description: "Stern JSON Logs"
+    scopes:
+      - containers
+    command: sh
+    background: false
+    args:
+      - -ic
+      - |
+        stern --kubeconfig=$KUBECONFIG --color always --tail 10 -n $NAMESPACE --template='{{colorGreen .PodName}}/{{ colorGreen .ContainerName}}{{"\n"}} {{ with $msg := .Message | tryParseJSON }}{{ prettyJSON $msg }}{{ else }} {{ .Message }} {{ end }}{{"\n"}}' $POD --container ^$NAME\$
+        exit 0
+  debug_container:
+    shortCut: Shift-D
+    description: Add debug container
+    dangerous: true
+    scopes:
+      - containers
+    command: sh
+    background: false
+    confirm: true
+    args:
+      - -c
+      - "kubectl --kubeconfig=$KUBECONFIG debug -it -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.13 --share-processes -- bash"
+  node-root-shell:
+    shortCut: Shift-S
+    description: Run root shell on node
+    dangerous: true
+    scopes:
+      - nodes
+    command: bash
+    background: false
+    confirm: true
+    args:
+      - -c
+      - |
+        host="$1"
+        json='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "hostIPC": true,
+            "hostNetwork": true,
+            "hostPID": true
+        '
+        if ! [[ -z "$host" ]]; then
+          json+=",
+          \"nodeSelector\" : {
+            \"kubernetes.io/hostname\" : \"$host\"
+          }
+          ";
+        fi
+        json+='
+          }
+        }
+        '
+        kubectl run -ti --image ubuntu:latest --rm --privileged --restart=Never --overrides="$json" root --command -- nsenter -t 1 -m -u -n -i -- bash -l
+  eks-node-viewer:
+    shortCut: Shift-X
+    description: "eks-node-viewer"
+    scopes:
+      - node
+    background: false
+    command: sh
+    args:
+    - -c
+    - |
+      eks-node-viewer --kubeconfig $KUBECONFIG --resources cpu,memory --extra-labels karpenter.sh/nodepool,eks-node-viewer/node-age --node-sort=creation=dsc
