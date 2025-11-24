@@ -76,6 +76,11 @@ in
       pkgs.pkgs-master.claude-code
       ffmpeg
 
+      # Meshtastic/SDR
+      natscli
+      nats-server
+      platformio-core
+      urh
     ];
   };
 
@@ -85,9 +90,7 @@ in
   # Machine-specific homebrew packages
   homebrew.taps = [
     "facebook/fb"
-    "felixkratz/formulae"
     "getsentry/tools"
-    "nats-io/nats-tools"
   ];
 
   homebrew.brews = [
@@ -99,6 +102,7 @@ in
     "discord"
     "iina"
     "jdownloader"
+    "qflipper"
     "tidal"
     "transmission"
     "xcodes-app"

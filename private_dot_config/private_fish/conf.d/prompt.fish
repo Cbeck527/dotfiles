@@ -2,6 +2,6 @@
 if command -v my-prompt &>/dev/null
     set -g fish_transient_prompt 1
     function fish_prompt
-        ~/.bin/my-prompt --code $status $argv
+        my-prompt --code $status $argv
     end
 end
