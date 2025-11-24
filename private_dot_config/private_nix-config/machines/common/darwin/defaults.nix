@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }:
 
@@ -20,7 +18,6 @@
   };
 
   nix = {
-    # package = lib.mkDefault pkgs.nix;
     package = pkgs.nix;
     settings = {
       experimental-features = [
