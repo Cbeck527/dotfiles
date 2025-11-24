@@ -28,7 +28,6 @@
 
       programs.fish = {
         enable = true;
-        package = pkgs.pkgs-unstable.fish;
       };
 
       programs.direnv = {

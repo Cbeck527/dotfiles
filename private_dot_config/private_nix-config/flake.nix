@@ -2,18 +2,18 @@
   description = "Chris Becker's nix configuration for his hosts!";
 
   inputs = {
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
@@ -41,9 +41,9 @@
     {
       # Overlays to expose multiple nixpkgs channels
       overlays = {
-        pkgs-master = _: prev: {
-          pkgs-master = import inputs.nixpkgs-master {
-            inherit (prev.stdenv) system;
+        pkgs-stable = _: prev: {
+          pkgs-stable = import inputs.nixpkgs-stable {
+            system = prev.stdenv.hostPlatform.system;
             config = {
               allowUnfree = true;
             };
@@ -52,16 +52,16 @@
 
         pkgs-unstable = _: prev: {
           pkgs-unstable = import inputs.nixpkgs-unstable {
-            inherit (prev.stdenv) system;
+            system = prev.stdenv.hostPlatform.system;
             config = {
               allowUnfree = true;
             };
           };
         };
 
-        pkgs-stable = _: prev: {
-          pkgs-stable = import inputs.nixpkgs-stable {
-            inherit (prev.stdenv) system;
+        pkgs-master = _: prev: {
+          pkgs-master = import inputs.nixpkgs-master {
+            system = prev.stdenv.hostPlatform.system;
             config = {
               allowUnfree = true;
             };

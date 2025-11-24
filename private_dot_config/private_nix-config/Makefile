@@ -55,8 +55,12 @@ fclean:
 	sudo ./result/sw/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations old
 	./result/sw/bin/nix-collect-garbage -d
 
+lock: lock.nix lock.osx lock.home
+lock.nix:; nix flake lock $(NIX_CHANNELS)
+lock.osx:; nix flake lock $(OSX_CHANNELS)
+lock.home:; nix flake lock $(HOME_CHANNELS)
 
 update: update.nix update.osx update.home
-update.nix:; nix flake lock $(addprefix --update-input , $(NIX_CHANNELS))
-update.osx:; nix flake lock $(addprefix --update-input , $(OSX_CHANNELS))
-update.home:; nix flake lock $(addprefix --update-input , $(HOME_CHANNELS))
+update.nix:; nix flake update $(NIX_CHANNELS)
+update.osx:; nix flake update $(OSX_CHANNELS)
+update.home:; nix flake update $(HOME_CHANNELS)

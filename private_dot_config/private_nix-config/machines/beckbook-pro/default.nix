@@ -14,7 +14,7 @@ let
   };
 
   emacs-macport =
-    (pkgs.pkgs-unstable.emacs-macport.override {
+    (pkgs.emacs-macport.override {
       withDbus = false;
       withImageMagick = false;
       withNativeCompilation = true;
@@ -72,7 +72,7 @@ in
         sync_address = "https://shellsync.cmb.software";
       };
     };
-    home.packages = with pkgs.pkgs-unstable; [
+    home.packages = with pkgs; [
       pkgs.pkgs-master.claude-code
       ffmpeg
 

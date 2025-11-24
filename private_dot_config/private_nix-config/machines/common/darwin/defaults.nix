@@ -47,26 +47,26 @@
   programs.nix-index.enable = true;
 
   environment = {
-    systemPackages = [
-      pkgs.bashInteractive
-      pkgs.coreutils
-      pkgs.fish
-      pkgs.git
-      pkgs.gnupg
-      pkgs.home-manager
-      pkgs.vim
-      pkgs.zsh
+    systemPackages = with pkgs; [
+      bashInteractive
+      coreutils
+      fish
+      git
+      gnupg
+      home-manager
+      vim
+      zsh
     ];
-    shells = [
-      pkgs.bashInteractive
-      pkgs.fish
-      pkgs.zsh
+    shells = with pkgs; [
+      fish
+      bashInteractive
+      zsh
     ];
   };
 
   programs = {
-    bash.enable = true;
     fish.enable = true;
+    bash.enable = true;
     zsh.enable = true;
   };
 
