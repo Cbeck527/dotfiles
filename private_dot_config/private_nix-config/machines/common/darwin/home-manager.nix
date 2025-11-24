@@ -112,6 +112,7 @@
         git
         git-lfs
         gh
+        go
         hexyl
         lua-language-server
         nixfmt-rfc-style
@@ -130,10 +131,23 @@
         kubernetes-helm
         terraform
 
-        # Language-Specific
+        # Languages / LSP
+        astro-language-server
+        awk-language-server
+        basedpyright
+        bash-language-server
+        buf # protobufs
+        dockerfile-language-server
+        emacs-lsp-booster
+        fish-lsp
         go-grip
         golangci-lint
+        gopls
+        nil # nix lsp
+        terraform-ls
         uv
+        vscode-langservers-extracted
+        yaml-language-server
 
         # Network Tools
         netcat

@@ -76,20 +76,6 @@ in
       pkgs.pkgs-master.claude-code
       ffmpeg
 
-      # language servers
-      emacs-lsp-booster
-      astro-language-server
-      awk-language-server
-      basedpyright
-      bash-language-server
-      buf # protobufs
-      dockerfile-language-server
-      fish-lsp
-      gopls
-      nil
-      terraform-ls
-      vscode-langservers-extracted
-      yaml-language-server
     ];
   };
 
