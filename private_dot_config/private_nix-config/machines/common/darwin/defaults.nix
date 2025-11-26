@@ -7,6 +7,7 @@
   imports = [
     ./homebrew.nix
     ./home-manager.nix
+    ./services.nix
   ];
 
   #package config
@@ -20,18 +21,9 @@
   nix = {
     package = pkgs.nix;
     settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
       warn-dirty = false;
       sandbox = "relaxed";
     };
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      extra-platforms = aarch64-darwin x86_64-darwin
-    '';
 
     gc = {
       automatic = true;
@@ -51,23 +43,25 @@
       bashInteractive
       coreutils
       fish
-      git
-      gnupg
       home-manager
-      vim
-      zsh
+
+      # fonts
+      nerd-fonts.symbols-only
+      ibm-plex
+
     ];
     shells = with pkgs; [
       fish
       bashInteractive
-      zsh
     ];
   };
 
   programs = {
     fish.enable = true;
-    bash.enable = true;
-    zsh.enable = true;
+  };
+
+  services.caffeinate = {
+    enable = true;
   };
 
   system.defaults = {
@@ -124,6 +118,11 @@
         "Quit When Finished" = true;
       };
     };
+  };
+
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
   };
 
   # Use touch ID for sudo auth

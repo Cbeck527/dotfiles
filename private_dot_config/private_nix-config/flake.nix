@@ -17,12 +17,18 @@
     };
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      fenix,
       nix-darwin,
       home-manager,
       nix-homebrew,
@@ -67,6 +73,8 @@
             };
           };
         };
+
+        fenix = fenix.overlays.default;
       };
 
       # macOS configurations

@@ -1,11 +1,11 @@
 [".config/emacs"]
     type = "git-repo"
-    url = "https://github.com/Cbeck527/emacs.d.git"
+    url = "git@github.com:Cbeck527/emacs.d.git"
     # no refresh period since I pull that often
 
 ["src/my-prompt"]
     type = "git-repo"
-    url = "https://github.com/Cbeck527/my-prompt.git"
+    url = "git@github.com:Cbeck527/my-prompt.git"
     # no refresh period since I pull that often
 
 [".local/share/tree-sitter/tree-sitter-elisp"]

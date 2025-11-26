@@ -43,9 +43,9 @@
     zsh
   ];
 
-  # Install and setup ZSH to work with nix(-darwin) as well
+  # Enable zsh for compatibility, but use fish as default shell
   programs.zsh.enable = true;
-  environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
+  environment.variables.SHELL = "${pkgs.fish}/bin/fish";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

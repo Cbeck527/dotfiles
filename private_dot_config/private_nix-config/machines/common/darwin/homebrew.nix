@@ -34,6 +34,7 @@
       "contexts"
       "rectangle-pro"
       "textexpander"
+      "cleanshot"
 
       # Development
       "sublime-text"

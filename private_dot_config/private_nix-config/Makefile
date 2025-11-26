@@ -31,6 +31,11 @@ switch.bootstrap: result/sw/bin/darwin-rebuild
 result/sw/bin/darwin-rebuild:
 	nix --experimental-features 'flakes nix-command' build ".#darwinConfigurations.$(BOOTSTRAP).system" --option sandbox false
 
+check:
+	nix flake check
+
+build:
+	nix build ".#darwinConfigurations.$(HOSTNAME).system" --dry-run
 
 endif # end osx
 

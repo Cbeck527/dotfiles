@@ -3,6 +3,7 @@
   "env": {
     "DISABLE_AUTOUPDATER": "1"
   },
+  "includeCoAuthoredBy": false,
   "statusLine": {
     "type": "command",
     "command": "npx -y ccusage statusline",
@@ -12,5 +13,5 @@
     "superpowers@superpowers-marketplace": true
   },
   "alwaysThinkingEnabled": true,
-  "includeCoAuthoredBy": false
+  "model": "opus"
 }

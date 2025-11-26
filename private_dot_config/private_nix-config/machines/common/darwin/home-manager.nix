@@ -82,11 +82,11 @@
         zoxide
 
         # Core Utilities
-        coreutils
         curl
         findutils
         gawk
         gnumake
+        gnupg
         gnused
         less
         parallel
@@ -119,6 +119,19 @@
         nodejs_24
         stylua
         vim
+
+        # Better Rust w/ nix-community fenix
+        cargo-deny
+        cargo-expand
+        cargo-fuzz
+        (pkgs.fenix.stable.withComponents [
+          "cargo"
+          "clippy"
+          "rust-src"
+          "rustc"
+          "rustfmt"
+        ])
+        rust-analyzer-nightly
 
         # Cloud & Infrastructure
         awscli
