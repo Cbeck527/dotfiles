@@ -1,3 +1,9 @@
+[".config/nix-config"]
+    type = "git-repo"
+    url = "git@github.com:Cbeck527/dotfiles-final-final-v2.git"
+    # no refresh period since I pull that often
+
+
 [".config/emacs"]
     type = "git-repo"
     url = "git@github.com:Cbeck527/emacs.d.git"
