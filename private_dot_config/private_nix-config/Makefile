@@ -1,19 +1,13 @@
 IMPURE ?= false
 
 UNAME := $(shell uname)
-UNAME_P := $(shell uname -p)
 HOSTNAME := $(shell hostname)
 
-ifeq ($(UNAME_P),arm)
-BOOTSTRAP := bootstrap-arm
-else
-BOOTSTRAP := bootstrap-x86
-endif
-
 # Channels
-NIX_CHANNELS := nixpkgs-master nixpkgs-stable nixpkgs-unstable nixos-stable
+NIX_CHANNELS := nixpkgs-master nixpkgs-stable nixpkgs-unstable
 HOME_CHANNELS := home-manager
-OSX_CHANNELS := nix-darwin
+OSX_CHANNELS := nix-darwin nix-homebrew homebrew-core homebrew-cask
+EXTRA_CHANNELS := fenix
 
 impure := $(if $(filter $(IMPURE),true),--impure,)
 
@@ -21,21 +15,16 @@ impure := $(if $(filter $(IMPURE),true),--impure,)
 ifeq ($(UNAME), Darwin) # darwin targets
 all: switch
 
-switch: result/sw/bin/darwin-rebuild
-	TERM=xterm ./result/sw/bin/darwin-rebuild switch ${impure} --verbose --flake ".#$(HOSTNAME)" --fallback --option sandbox false
-
-switch.bootstrap: result/sw/bin/darwin-rebuild
-	./result/sw/bin/darwin-rebuild switch ${impure} --verbose --flake ".#$(BOOTSTRAP)"
-	TERM=xterm ./result/sw/bin/darwin-rebuild switch ${impure} --verbose --flake ".#$(HOSTNAME)"
-
-result/sw/bin/darwin-rebuild:
-	nix --experimental-features 'flakes nix-command' build ".#darwinConfigurations.$(BOOTSTRAP).system" --option sandbox false
+switch:
+	darwin-rebuild switch ${impure} --verbose --flake ".#$(HOSTNAME)" --fallback --option sandbox false
 
 check:
 	nix flake check
 
 build:
 	nix build ".#darwinConfigurations.$(HOSTNAME).system" --dry-run
+
+# Fresh install: nix run nix-darwin -- switch --flake .#HOSTNAME
 
 endif # end osx
 
@@ -53,19 +42,20 @@ switch.linux:
 endif # end linux
 
 clean:
-	./result/sw/bin/nix-collect-garbage
+	nix-collect-garbage
 
 fclean:
 	@echo "/!\ require to be root"
-	sudo ./result/sw/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations old
-	./result/sw/bin/nix-collect-garbage -d
+	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
+	nix-collect-garbage -d
 
 lock: lock.nix lock.osx lock.home
 lock.nix:; nix flake lock $(NIX_CHANNELS)
 lock.osx:; nix flake lock $(OSX_CHANNELS)
 lock.home:; nix flake lock $(HOME_CHANNELS)
 
-update: update.nix update.osx update.home
+update: update.nix update.osx update.home update.extra
 update.nix:; nix flake update $(NIX_CHANNELS)
 update.osx:; nix flake update $(OSX_CHANNELS)
 update.home:; nix flake update $(HOME_CHANNELS)
+update.extra:; nix flake update $(EXTRA_CHANNELS)

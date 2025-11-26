@@ -18,6 +18,16 @@
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
+    # Declarative Homebrew taps
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -27,7 +37,6 @@
   outputs =
     {
       self,
-      nixpkgs,
       fenix,
       nix-darwin,
       home-manager,
@@ -36,41 +45,28 @@
     }@inputs:
     let
       inherit (self) outputs;
-
-      # Configuration for `nixpkgs`
-      nixpkgsDefaults = {
-        config = {
-          allowUnfree = true;
-        };
-      };
     in
     {
       # Overlays to expose multiple nixpkgs channels
       overlays = {
         pkgs-stable = _: prev: {
           pkgs-stable = import inputs.nixpkgs-stable {
-            system = prev.stdenv.hostPlatform.system;
-            config = {
-              allowUnfree = true;
-            };
+            inherit (prev.stdenv.hostPlatform) system;
+            config.allowUnfree = true;
           };
         };
 
         pkgs-unstable = _: prev: {
           pkgs-unstable = import inputs.nixpkgs-unstable {
-            system = prev.stdenv.hostPlatform.system;
-            config = {
-              allowUnfree = true;
-            };
+            inherit (prev.stdenv.hostPlatform) system;
+            config.allowUnfree = true;
           };
         };
 
         pkgs-master = _: prev: {
           pkgs-master = import inputs.nixpkgs-master {
-            system = prev.stdenv.hostPlatform.system;
-            config = {
-              allowUnfree = true;
-            };
+            inherit (prev.stdenv.hostPlatform) system;
+            config.allowUnfree = true;
           };
         };
 
@@ -79,31 +75,26 @@
 
       # macOS configurations
       darwinConfigurations = {
-        # Mininal configurations to bootstrap systems
-        bootstrap-x86 = nix-darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          modules = [
-            { nixpkgs.overlays = builtins.attrValues self.overlays; }
-            ./darwin/bootstrap.nix
-            { nixpkgs = nixpkgsDefaults; }
-          ];
-        };
-        bootstrap-arm = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = [
-            { nixpkgs.overlays = builtins.attrValues self.overlays; }
-            ./darwin/bootstrap.nix
-            { nixpkgs = nixpkgsDefaults; }
-          ];
-        };
-
         beckbook-pro = nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = { inherit inputs outputs; };
           modules = [
             { nixpkgs.overlays = builtins.attrValues self.overlays; }
-            ./machines/beckbook-pro/default.nix
+            nix-homebrew.darwinModules.nix-homebrew
             home-manager.darwinModules.home-manager
+            ./machines/beckbook-pro/default.nix
+          ];
+        };
+
+        # work
+        mac-h99xrph3j9 = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            { nixpkgs.overlays = builtins.attrValues self.overlays; }
+            nix-homebrew.darwinModules.nix-homebrew
+            home-manager.darwinModules.home-manager
+            ./machines/mac-h99xrph3j9/default.nix
           ];
         };
       };

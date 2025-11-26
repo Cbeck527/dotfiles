@@ -40,6 +40,7 @@
   # Add shells installed by nix to /etc/shells file
   environment.shells = with pkgs; [
     bashInteractive
+    fish
     zsh
   ];
 

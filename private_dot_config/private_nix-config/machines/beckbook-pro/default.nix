@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -18,6 +19,16 @@ in
   system.primaryUser = username;
 
   _module.args = { inherit username userHome; };
+
+  # nix-homebrew: manage Homebrew installation declaratively
+  nix-homebrew = {
+    enable = true;
+    enableRosetta = true;
+    user = username;
+    autoMigrate = true;
+    # mutableTaps = true allows nix-darwin's homebrew.taps to work
+    mutableTaps = true;
+  };
 
   # home-manager customizations
   home-manager.users.${username} = {

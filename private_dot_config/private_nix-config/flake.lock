@@ -59,6 +59,38 @@
         "type": "github"
       }
     },
+    "homebrew-cask": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764131567,
+        "narHash": "sha256-oUpC9e9StcOtQjjAQ2kupbmh6vs7Odd7wCQkQLAKBfA=",
+        "owner": "homebrew",
+        "repo": "homebrew-cask",
+        "rev": "2ee6d40bb48bcf0fc0534329b9b19efd6f5905bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "repo": "homebrew-cask",
+        "type": "github"
+      }
+    },
+    "homebrew-core": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764131567,
+        "narHash": "sha256-q/GuGbbPhsjNyS5cz4JwRVx5FkItuyQlewLyE4NUuJY=",
+        "owner": "homebrew",
+        "repo": "homebrew-core",
+        "rev": "37d064be7f2ccecc82fcadd2f1bdea1cf3d40812",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "repo": "homebrew-core",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -98,27 +130,13 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1763934636,
-        "narHash": "sha256-9glbI7f1uU+yzQCq5LwLgdZqx6svOhZWkd4JRY265fc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ee09932cedcef15aaf476f9343d1dea2cb77e261",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1764094779,
-        "narHash": "sha256-rekwGq9510ZtJvWY5eo+Vl23ZJGd4YEySUTZXBb013o=",
+        "lastModified": 1764131314,
+        "narHash": "sha256-FReg7pldMLDV6KNH+6jf+++4YJbnN6V+dA73DfNe+z4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1cae1f11c797a4457a966e9273288a27995e7aaf",
+        "rev": "225d24ae48db69cb5f1117b06d41127684a549b9",
         "type": "github"
       },
       "original": {
@@ -164,9 +182,10 @@
       "inputs": {
         "fenix": "fenix",
         "home-manager": "home-manager",
+        "homebrew-cask": "homebrew-cask",
+        "homebrew-core": "homebrew-core",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
-        "nixpkgs": "nixpkgs",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable"
