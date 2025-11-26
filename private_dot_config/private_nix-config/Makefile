@@ -24,8 +24,6 @@ check:
 build:
 	nix build ".#darwinConfigurations.$(HOSTNAME).system" --dry-run
 
-# Fresh install: nix run nix-darwin -- switch --flake .#HOSTNAME
-
 endif # end osx
 
 

@@ -17,17 +17,13 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply cbeck527
 Install upstream nix from [Determinate Systems](https://determinate.systems/nix-installer/):
 
 ``` bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install  --prefer-upstream-nix --diagnostic-endpoint ""
 ```
-
-> [!TIP]
-> On macos they recommend using their [macOS package](https://install.determinate.systems/determinate-pkg/stable/Universal)
-> , but I've always used their CLI installer...
 
 Then set everything up!
 
 ``` bash
 cd ~/.config/nix-config
-sudo make
+nix run nix-darwin -- switch --flake .#HOSTNAME
 ```
 
