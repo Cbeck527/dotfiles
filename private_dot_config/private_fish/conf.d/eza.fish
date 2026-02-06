@@ -6,8 +6,8 @@ if status is-interactive; and command -v eza >/dev/null
         eza -lF --group-directories-first $argv
     end
 
-    function la --wraps=eza --description 'List all files including hidden'
-        eza -laF --group-directories-first $argv
+    function lsa --wraps=eza --description 'List all files including hidden'
+        eza -lF --all --all --group-directories-first $argv
     end
 
     function ll --wraps=eza --description 'List files with permissions'

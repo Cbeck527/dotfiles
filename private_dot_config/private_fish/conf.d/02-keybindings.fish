@@ -48,19 +48,11 @@ function _custom_complete_tab
 end
 
 function fish_user_key_bindings
-    # bind \t 'test -n (commandline); and commandline -f complete'
-    # use tab for accepting autosuggestion
-    # bind \t accept-autosuggestion
-    # bind \t _custom_complete_tab
-
     # vim-like autocomplete navigation
     bind \ch _custom_complete_h
     bind \cj _custom_complete_j
     bind \ck _custom_complete_k
     bind \cl _custom_complete_l
-
-    # C-SPC to show autocomplete menu
-    bind -k nul complete
 
     # C-x C-e like in bash
     bind \cX\cE edit_command_buffer
