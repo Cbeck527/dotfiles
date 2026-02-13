@@ -3,15 +3,23 @@
   "env": {
     "DISABLE_AUTOUPDATER": "1"
   },
-  "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "npx -y ccusage statusline",
+    "command": "/Users/christopher.becker/.local/share/cargo/bin/my-prompt --claude",
     "padding": 0
   },
   "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
+    "context7@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "model": "opus"
+  "spinnerTipsEnabled": false,
+  "alwaysThinkingEnabled": true
 }
