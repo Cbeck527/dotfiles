@@ -1,18 +1,16 @@
 # SSH Agent configuration for Fish shell
 
 if status is-interactive
-    # macOS: Use the keychain SSH agent
+    # macOS: Use the system SSH agent via launchd
     if test (uname) = "Darwin"
-        # macOS handles SSH agent via launchd and keychain
-        # Just ensure we're using the keychain
-        set -gx SSH_AUTH_SOCK ~/.ssh/auth_sock
-        
-        # Link to the macOS SSH agent socket if it exists
-        if test -S "$SSH_AUTH_SOCK"
-            # Socket exists, we're good
-        else if test -S /private/tmp/com.apple.launchd.*/Listeners
-            # Find and link the SSH agent socket
-            ln -sf /private/tmp/com.apple.launchd.*/Listeners $SSH_AUTH_SOCK 2>/dev/null
+        # macOS sets SSH_AUTH_SOCK automatically via launchd
+        # Only intervene if it's not set or invalid
+        if not test -S "$SSH_AUTH_SOCK"
+            # Find the launchd SSH agent socket
+            set -l agent_sock (find /private/tmp/com.apple.launchd.*/Listeners -type s 2>/dev/null | head -1)
+            if test -n "$agent_sock" -a -S "$agent_sock"
+                set -gx SSH_AUTH_SOCK $agent_sock
+            end
         end
     else
         # Linux: Start SSH agent if not running
