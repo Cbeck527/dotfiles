@@ -7,18 +7,20 @@
     "commit": "",
     "pr": ""
   },
-  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "my-prompt --claude",
     "padding": 0
   },
   "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true
   },
   "spinnerTipsEnabled": false,
   "alwaysThinkingEnabled": true
