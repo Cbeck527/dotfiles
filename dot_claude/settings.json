@@ -10,7 +10,7 @@
   "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "/Users/christopher.becker/.local/share/cargo/bin/my-prompt --claude",
+    "command": "my-prompt --claude",
     "padding": 0
   },
   "enabledPlugins": {
